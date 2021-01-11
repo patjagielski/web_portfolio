@@ -2,8 +2,10 @@ const mysql = require('mysql');
 const express = require('express');
 const cors = require("cors");
 const app = express();
-
+app.use(express.json());
+app.use(cors());
 const jwt = require("jsonwebtoken");
+
 const verifyJWT = (req, res, next) =>{
   const token = req.headers["x-access-token"]
 
@@ -21,10 +23,6 @@ const verifyJWT = (req, res, next) =>{
   }
 }
 
-
-
-app.use(express.json());
-app.use(cors());
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -56,11 +54,52 @@ app.post("/register", (req, res)=>{
   });
 });
 
+app.post("/addNewUserInfo", (req, res)=>{
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const userWork = req.body.userWork;
+  const userEducation = req.body.userEducation;
+  const userCV = req.body.userCV;
 
+  connection.query("INSERT INTO user_info(userWork, userEducation, firstName, lastName, cv) VALUES(?,?,?,?,?)", [firstName, lastName, userWork, userEducation, userCV], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      console.log(rows)
+    }
+  })
+})
 
 app.get("/checkAuth", verifyJWT,(req, res)=>{
   res.send("Heck yeah I am authenticated ^-^");
 })
+
+app.post("/getUser",(req, res)=>{
+  
+  const id = req.body.id;
+
+  connection.query("SELECT * FROM user_info WHERE userInfo_id=?", [id], (err, rows)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.send(rows);
+    }
+  })
+})
+app.post("/getUserCV",(req, res)=>{
+  
+  const id = req.body.id;
+
+  connection.query("SELECT * FROM user_info WHERE userInfo_id=?", [id], (err, rows)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
+
 
 app.post("/login",(req, res)=>{
   const username = req.body.username;
@@ -74,7 +113,7 @@ app.post("/login",(req, res)=>{
     if(rows.length > 0){
 
       const id = rows[0].id
-      const token = jwt.sign({idUser},"jwtSecret", {
+      const token = jwt.sign({id},"jwtSecret", {
         expiresIn: 300,
       })
       console.log(token);

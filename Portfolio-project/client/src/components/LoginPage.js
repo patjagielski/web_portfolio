@@ -14,7 +14,7 @@ function LoginPage(){
 
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const handleRegister =() =>{
+    const handleRegister = () =>{
         Axios.post("http://localhost:5000/register", {
             username: regUsername,
             password: regPassword,
@@ -83,7 +83,7 @@ function LoginPage(){
         </div>
 
 
-            {loggedIn &&(<button onClick={userAuthenticated}>Check if authenticated</button>)}
+            {loggedIn &&(<h1>Hello, {username}!</h1>)}
 
         </div>
         
