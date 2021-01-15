@@ -1,6 +1,5 @@
 import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
 import Dashboard from '../components/Dashboard';
@@ -9,15 +8,17 @@ import EditDashboard from '../components/EditDashboard';
 import Portfolio from '../components/Portfolio';
 import ContactMe from '../components/ContactMe';
 import NotFound from '../components/NotFound';
+import PrivateRoute from './PrivateRouter';
+import PublicRoute from './PublicRouter';
+const createHistory = require("history");
 
-export const history = createHistory();
+export const history = createHistory.createHashHistory();
 
 const AppRouter = () => (
     <Router history={history}>
     <div>
-        <Header />
             <Switch>
-                <Route path='/' component={LoginPage} exact={true} />
+                <PublicRoute path='/' component={LoginPage} exact={true} />
                 <Route path='/home' component={Dashboard}/>
                 <Route path='/portfolio' component={Portfolio} />
                 <Route path='/contactme' component={ContactMe} />

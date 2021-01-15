@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) =>{
@@ -14,7 +15,7 @@ const verifyJWT = (req, res, next) =>{
   } else{
     jwt.verify(token, "jwtSecret", (err, decoded)=>{
       if(err){
-        res.json({auth: false, message: "authentication failed :("});
+        res.json({auth: false, message: "authentication failed :(", err:err});
       }else{
         req.userId = decoded.id;
         next();
@@ -25,10 +26,10 @@ const verifyJWT = (req, res, next) =>{
 
 
 var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password:"pass",
-  database:"tin_db",
+  host: "database-1.czkrpjn4yewq.eu-central-1.rds.amazonaws.com",
+  user: "admin",
+  password:"Jagielski1!",
+  database:"tin",
   port:"3306"
 })
 
@@ -71,14 +72,15 @@ app.post("/addNewUserInfo", (req, res)=>{
 })
 
 app.get("/checkAuth", verifyJWT,(req, res)=>{
-  res.send("Heck yeah I am authenticated ^-^");
+  console.log("Heck yeah I am authenticated ^-^");
+  res.send(true);
 })
 
 app.post("/getUser",(req, res)=>{
   
   const id = req.body.id;
 
-  connection.query("SELECT * FROM user_info WHERE userInfo_id=?", [id], (err, rows)=>{
+  connection.query("SELECT * FROM user_info WHERE userInfoId=?", [id], (err, rows)=>{
     if(err){
       console.log(err);
     }else{
@@ -86,6 +88,7 @@ app.post("/getUser",(req, res)=>{
     }
   })
 })
+
 app.post("/getUserCV",(req, res)=>{
   
   const id = req.body.id;

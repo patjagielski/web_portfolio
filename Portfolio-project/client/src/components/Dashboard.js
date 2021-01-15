@@ -12,7 +12,7 @@ function Dashboard(){
     const [lastName, setLastName] = useState("");
     const [userWork, setUserWork] = useState("");
     const [userEducation, setUserEducation] = useState("");
-    
+    const [userBio, setUserBio] = useState("");
     
     
     useEffect(()=> {
@@ -24,7 +24,7 @@ function Dashboard(){
                 setLastName(res.data[0].lastName);
                 setUserWork(res.data[0].userWork);
                 setUserEducation(res.data[0].userEducation);
-                
+                setUserBio(res.data[0].userBio);
             }
         })}, []);
 
@@ -38,7 +38,7 @@ function Dashboard(){
             </div>
             <div>
                 <h1> Welcome to {firstName} {lastName}'s Portfolio </h1>
-                <p> Learn more about me!</p>
+                <p> {userBio}</p>
                 <div>
                     <h2>Bio/about me</h2>
                 </div>

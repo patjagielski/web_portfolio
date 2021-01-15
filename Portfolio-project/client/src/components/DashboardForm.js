@@ -1,44 +1,37 @@
 import React, { useState } from "react";
-import Axios from "axios";
-import Header from './Header';
 
-function EditDashboard(){
-    
+
+function DashbaordForm(){
+
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [userEducation, setUserEducation] = useState("")
     const [userWork, setUserWork] = useState("")
+    const [userBio, setUserBio] = useState("")
     const [userCV, setUserCV] = useState("")
-    
-    const addNewUserInfo = () =>{
-        Axios.post("http://localhost:5000/addNewUserInfo", {
-            firstName,
-            lastName,
-            userEducation,
-            userWork,
-            userCV
-        }).then((res)=>{
-            console.log(res); 
-        })
+
+    const onNameChange = (e) => {
+        const name = e.target.value;
+        if(!name || name.match(/^[a-zA-Z ]+$/)){
+            return name
+        }
+    }
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+
+        return{firstName,lastName, userEducation, userWork, userBio, userCV}
     }
 
     return(
-        <div>
-        <div>
-            <Header />
-        </div>
-        <div>
-            <h1> Edit a Dashboard </h1>
-        </div>
-        <div>
+        <form onChange={handleSubmit}>
             <input type="text" placeholder="First Name" 
                 onChange={(e)=>{
-                    setFirstName(e.target.value);
+                    setFirstName(onNameChange(e));
                 }}
             />
             <input type="text" placeholder="Last Name"
                 onChange={(e)=>{
-                    setLastName(e.target.value);
+                    setLastName(onNameChange(e));
                 }}
             />
             <input type="text" placeholder="Work Experience"
@@ -46,20 +39,24 @@ function EditDashboard(){
                     setUserWork(e.target.value);
                 }}
             />
-            <input type="text" placeholder="Education"
+            <input type="text" placeholder="Degree"
                 onChange={(e)=>{
                     setUserEducation(e.target.value);
                 }}
             />
-            <input type="text" placeholder="CV?" 
+            <textarea onChange = {(e)=>{setUserBio(e.target.value)}} placeholder="Input a Bio here">  
+                
+            </textarea>
+            <input type="file" placeholder="CV?" 
                 onChange={(e)=>{
                     setUserCV(e.target.value);
                 }}
             />
-            <input type="button" value="submit" onClick={(addNewUserInfo)}/>
-        </div>
-        </div>
+            <div>
+                <button>Submit</button>
+            </div>
+        </form>
     )
-}
 
-export default EditDashboard;
+}
+export default DashbaordForm;

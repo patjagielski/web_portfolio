@@ -1,10 +1,15 @@
-import React, {useState} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import React, {useContext, useEffect, useReducer, useState} from 'react';
+import {connect} from 'react-redux';
+import {history} from '../routers/AppRouter';
 import Axios from "axios";
 import Dashboard from '../components/Dashboard';
+import {startLogin,login} from '../actions/auth';
+
+
 
 
 function LoginPage(){
+
     const [regUsername, setRegUsername] = useState("");
     const [regPassword, setRegPassword] = useState("");
     const [regEmail, setRegEmail] = useState("");
@@ -20,33 +25,16 @@ function LoginPage(){
             password: regPassword,
             email: regEmail
         }).then((res)=>{
-            console.log(res);
+            history.push('/home');
         });
     };
-    const handleLogin =() =>{
-        Axios.post("http://localhost:5000/login", {
-            username,
-            password
-        }).then((res)=>{
-            if(res.data.auth){
-                setLoggedIn(true)
-                localStorage.setItem("token", res.data.token)
-            }else{
-                setLoggedIn(false)
-            }
-            console.log(res);
-        });
+    const handleLogin = () =>{
+        startLogin(username, password)
     };
-    const userAuthenticated =()=>{
-        Axios.get("http://localhost:5000/checkAuth",{
-            headers:{
-                "x-access-token":localStorage.getItem("token"),
-            }}).then((res)=>{
-                console.log(res);
-            })
-    }
+   
 
     return(
+        
         <div>
         <div className="login">
             <input type="text" placeholder="username"
@@ -59,7 +47,7 @@ function LoginPage(){
                     setPassword(e.target.value);
             }}
             />
-            <input type="button" value="Log in" onClick={(handleLogin)}/>
+            <button onClick={handleLogin}>Submit</button>
         </div>
 
 
@@ -82,13 +70,15 @@ function LoginPage(){
             <input type="button" value="register" onClick={(handleRegister)}/>
         </div>
 
-
-            {loggedIn &&(<h1>Hello, {username}!</h1>)}
-
         </div>
         
     )
 
 };
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch) => ({
+    startLogin: () => dispatch(startLogin(username, password)),
+    login: () => dispatch(login())
+});
+
+export default connect(undefined, mapDispatchToProps)(LoginPage);
