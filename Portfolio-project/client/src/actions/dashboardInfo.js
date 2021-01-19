@@ -28,13 +28,30 @@ export const setDashboard = (uid) =>{
         id: uid,
         }).then((res)=>{
             if(res.data.length === 1){
-                console.log(getState());
                 return res.data[0];
             }else{
                 console.log("errror");
                 console.log(uid);
             }
         });
+    return result;
+    }
+}
+
+export const setDashboardCV = (uid) =>{
+    return(dispatch, getState) =>{
+        const uid = getState().auth.uid;
+        const result = Axios.post("http://localhost:5000/getUserCV", {
+            id: uid,
+            }).then((res)=>{
+                if(res){
+                    // console.log(res.data[0].userCV)
+                    return res.data[0].userCV;
+                }else{
+                    console.log("errror");
+                    console.log(uid);
+                }
+            });
     return result;
     }
 }

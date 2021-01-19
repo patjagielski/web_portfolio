@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "live-server public/",
     "build": "webpack",
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server "
   },
   "proxy": "http://localhost:5000",
   "dependencies": {

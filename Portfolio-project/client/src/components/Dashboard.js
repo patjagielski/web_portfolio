@@ -25,7 +25,6 @@ function Dashboard({setDashboard}){
             setUserWork(result.userWork);
             setUserEducation(result.userEducation);
             setUserBio(result.userBio);
-            console.log("result" ,result);
         }
         fetchData();
         }, []);

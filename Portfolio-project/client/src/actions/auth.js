@@ -20,7 +20,6 @@ export const startLogin = (username, password) => {
             password
         }).then((res)=>{
             if(res.data.auth){
-                console.log("0", res)
                 localStorage.setItem("token", res.data.token)
                 // history.push('/home');
                 return res;

@@ -93,7 +93,7 @@ app.post("/getUserCV",(req, res)=>{
   
   const id = req.body.id;
 
-  connection.query("SELECT * FROM user_info WHERE userInfo_id=?", [id], (err, rows)=>{
+  connection.query("SELECT * FROM user_info WHERE userId=?", [id], (err, rows)=>{
     if(err){
       console.log(err);
     }else{

@@ -1,30 +1,48 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import Axios from "axios";
+import { setDashboardCV } from '../actions/dashboardInfo';
+import ImageLoader from 'react-image-file';
 
+function Portfolio({setDashboardCV}){
 
-function Portfolio(){
+    const [userCV, setUserCV] = useState('');
 
-    const [userCV, setUserCV] = useState("");
     
     useEffect(()=> {
-        Axios.post("http://localhost:5000/getUserCV", {
-        id: 1,
-        }).then((res)=>{
-            if(res.data.length === 1){
-                setUserCV(res.data[0].cv);
-                console.log(res)
-            }
-        })}, []);
+        async function fetchData() {
+            const result = await setDashboardCV();
+            const imageStr = arrayBufferToBase64(result.data);
+            
+            setUserCV(`data:image/jpeg;base64,${imageStr}`)
+        }
+        // <ImageLoader file={fetchData()} alt='some text'/>
+        fetchData();
+        }, []);
+
+        const arrayBufferToBase64 =(buffer) => {
+            var binary = '';
+            var bytes = [].slice.call(new Uint8Array(buffer));
+            bytes.forEach((b) => binary += String.fromCharCode(b));
+
+            return window.btoa(binary);
+        };
 
     return(
     <div>
         <h1> This here is my Portfolio </h1>
-        
-        <h1>{userCV}</h1>
+        <img
+        src={userCV}
+        alt='Helpful alt text'/>
+       
         
         
     </div>
     );
 };
 
-export default Portfolio;
+const mapDispatchToProps = (dispatch) => ({
+    setDashboardCV: () => dispatch(setDashboardCV())
+});
+
+export default connect(undefined, mapDispatchToProps)(Portfolio);
