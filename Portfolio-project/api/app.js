@@ -80,7 +80,7 @@ app.post("/getUser",(req, res)=>{
   
   const id = req.body.id;
 
-  connection.query("SELECT * FROM user_info WHERE userInfoId=?", [id], (err, rows)=>{
+  connection.query("SELECT * FROM user_info WHERE userId=?", [id], (err, rows)=>{
     if(err){
       console.log(err);
     }else{
@@ -119,7 +119,7 @@ app.post("/login",(req, res)=>{
       const token = jwt.sign({id},"jwtSecret", {
         expiresIn: 300,
       })
-      console.log(token);
+      console.log("creating token");
 
       res.json({auth: true, token: token, result: rows})
     }else{

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import Axios from "axios";
+import { setDashboard } from '../actions/dashboardInfo';
 
 
-function Dashboard(){
+function Dashboard({setDashboard}){
     /**
      * Display first name & last name
      * Display all table info in appropriate areas
@@ -16,17 +18,17 @@ function Dashboard(){
     
     
     useEffect(()=> {
-        Axios.post("http://localhost:5000/getUser", {
-        id: 1,
-        }).then((res)=>{
-            if(res.data.length === 1){
-                setFirstName(res.data[0].firstName);
-                setLastName(res.data[0].lastName);
-                setUserWork(res.data[0].userWork);
-                setUserEducation(res.data[0].userEducation);
-                setUserBio(res.data[0].userBio);
-            }
-        })}, []);
+        async function fetchData() {
+            const result = await setDashboard();
+            setFirstName(result.firstName);
+            setLastName(result.lastName);
+            setUserWork(result.userWork);
+            setUserEducation(result.userEducation);
+            setUserBio(result.userBio);
+            console.log("result" ,result);
+        }
+        fetchData();
+        }, []);
 
     return(
         <div>
@@ -61,4 +63,8 @@ function Dashboard(){
     );
 };
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => ({
+    setDashboard: () => dispatch(setDashboard())
+});
+
+export default connect(undefined, mapDispatchToProps)(Dashboard);

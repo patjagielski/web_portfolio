@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Axios from "axios";
 import Header from './Header';
 import DashbaordForm from "./DashboardForm";
+import {connect} from 'react-redux';
 
 function AddDashboard(){
 
@@ -19,8 +19,10 @@ function AddDashboard(){
     //     })
     // }
    
-    const handleSubmit = ({firstName,lastName, userEducation, userWork, userBio, userCV}) =>{
+    const handleSubmit = (dashboardInfo) =>{
         //create axios post 
+        this.props.startAddDashboard(dashboardInfo);
+        this.props.history.push("/home");
         //dipatch redux
     }
 
@@ -41,4 +43,10 @@ function AddDashboard(){
     )
 }
 
-export default AddDashboard;
+
+const mapDispatchToProps = (dispatch) => ({
+    startAddDashboard: (dashboardInfo) => dispatch(startAddDashboard(dashboardInfo))
+});
+
+
+export default connect(undefined, mapDispatchToProps)(AddDashboard);

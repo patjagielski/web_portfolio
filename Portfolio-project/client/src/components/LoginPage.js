@@ -8,7 +8,7 @@ import {startLogin,login} from '../actions/auth';
 
 
 
-function LoginPage(){
+function LoginPage({finishLogin}){
 
     const [regUsername, setRegUsername] = useState("");
     const [regPassword, setRegPassword] = useState("");
@@ -28,8 +28,10 @@ function LoginPage(){
             history.push('/home');
         });
     };
-    const handleLogin = () =>{
-        startLogin(username, password)
+    const handleLogin = async () =>{
+        const result = await startLogin(username, password)
+        const userId = result.data.result[0].userId;
+        finishLogin(userId);
     };
    
 
@@ -77,8 +79,8 @@ function LoginPage(){
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin: () => dispatch(startLogin(username, password)),
-    login: () => dispatch(login())
+    startLogin: (username, password) => dispatch(startLogin(username, password)),
+    finishLogin: (uid) => dispatch(login(uid))
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
