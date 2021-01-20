@@ -5,7 +5,7 @@ import Axios from "axios";
 import { setDashboard } from '../actions/dashboardInfo';
 
 
-function Dashboard({setDashboard}){
+function FreeLancerDashboard({setDashboard}){
     /**
      * Display first name & last name
      * Display all table info in appropriate areas
@@ -66,4 +66,4 @@ const mapDispatchToProps = (dispatch) => ({
     setDashboard: () => dispatch(setDashboard())
 });
 
-export default connect(undefined, mapDispatchToProps)(Dashboard);
+export default connect(undefined, mapDispatchToProps)(FreeLancerDashboard);

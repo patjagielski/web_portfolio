@@ -1,17 +1,21 @@
 import {history} from '../routers/AppRouter';
 import Axios from 'axios';
 
-export const login = (uid) =>({
+export const login = (uid, roleName) =>({
     type: 'LOGIN',
-    uid
+    uid,
+    roleName
 });
 
-export const startLogout = () =>{
-    history.push("/");
-    return () =>{
-        //figure out how to logout properly
-        
-    }
+export const logout = () => ({
+    type: "LOGOUT"
+});
+
+
+
+export const startLogout = async () =>{
+    localStorage.removeItem("token")
+    await logout();
 }
 
 export const startLogin = (username, password) => { 
@@ -22,6 +26,7 @@ export const startLogin = (username, password) => {
             if(res.data.auth){
                 localStorage.setItem("token", res.data.token)
                 // history.push('/home');
+                console.log(res);
                 return res;
             }
         });

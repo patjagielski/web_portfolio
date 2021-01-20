@@ -108,7 +108,7 @@ app.post("/login",(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
 
-  connection.query("SELECT * FROM user WHERE username=? AND password=?", [username, password], (err, rows)=>{
+  connection.query("SELECT * FROM user u, role_user ru, roles r WHERE u.userId = ru.userID AND r.roleId = ru.roleId AND u.username = ? AND u.password = ? ;", [username, password], (err, rows)=>{
     if(err){
       res.send({err:err})
     }

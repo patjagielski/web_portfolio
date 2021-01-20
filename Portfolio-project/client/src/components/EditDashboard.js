@@ -25,9 +25,6 @@ function EditDashboard(){
     return(
         <div>
         <div>
-            <Header />
-        </div>
-        <div>
             <h1> Edit a Dashboard </h1>
         </div>
         <div>

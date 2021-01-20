@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useReducer, useState} from 'react';
 import {connect} from 'react-redux';
 import {history} from '../routers/AppRouter';
 import Axios from "axios";
-import Dashboard from '../components/Dashboard';
+import Dashboard from './FreeLancerDashboard';
 import {startLogin,login} from '../actions/auth';
 
 
@@ -31,7 +31,8 @@ function LoginPage({finishLogin}){
     const handleLogin = async () =>{
         const result = await startLogin(username, password)
         const userId = result.data.result[0].userId;
-        finishLogin(userId);
+        const roleName = result.data.result[0].roleName;
+        finishLogin(userId, roleName);
     };
    
 
@@ -80,7 +81,7 @@ function LoginPage({finishLogin}){
 
 const mapDispatchToProps = (dispatch) => ({
     startLogin: (username, password) => dispatch(startLogin(username, password)),
-    finishLogin: (uid) => dispatch(login(uid))
+    finishLogin: (uid, roleName) => dispatch(login(uid, roleName))
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);

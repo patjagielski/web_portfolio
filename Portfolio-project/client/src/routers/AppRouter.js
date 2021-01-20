@@ -2,7 +2,9 @@ import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
-import Dashboard from '../components/Dashboard';
+import FreeLancerDashboard from '../components/FreeLancerDashboard';
+import AdminDashboard from '../components/AdminDashboard';
+import RecruiterDashboard from '../components/RecruiterDashboard';
 import AddDashboard from '../components/AddDashboard';
 import EditDashboard from '../components/EditDashboard';
 import Portfolio from '../components/Portfolio';
@@ -19,7 +21,9 @@ const AppRouter = () => (
     <div>
             <Switch>
                 <PublicRoute path='/' component={LoginPage} exact={true} />
-                <PrivateRoute path='/home' component={Dashboard}/>
+                <PrivateRoute path='/freelancer' component={FreeLancerDashboard}/>
+                <PrivateRoute path='/admin' component={AdminDashboard}/>
+                <PrivateRoute path='/recruiter' component={RecruiterDashboard}/>
                 <PrivateRoute path='/portfolio' component={Portfolio} />
                 <PrivateRoute path='/contactme' component={ContactMe} />
                 <PrivateRoute path='/AddDashboard' component={AddDashboard}/>

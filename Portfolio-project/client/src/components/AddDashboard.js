@@ -29,9 +29,6 @@ function AddDashboard(){
     return(
         <div>
         <div>
-            <Header />
-        </div>
-        <div>
             <h1> Create a new Dashboard </h1>
         </div>
         <div>
