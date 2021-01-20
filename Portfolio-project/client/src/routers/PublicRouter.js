@@ -1,28 +1,30 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import Header from '../components/Header';
+import AdminHeader from '../components/AdminHeader';
+import FreeLancerHeader from '../components/FreeLancerHeader';
+import RecruiterHeader from '../components/RecruiterHeader';
 
 export const PublicRoute = ({checkRole, isAuthenticated, component: Component}) => (
     <Route component={(props) => (
         isAuthenticated ? ( checkRole === "ADMIN" ? (
             <div>
-                <Header />
+                <AdminHeader />
             <Redirect to="/admin"/>
             </div>) : checkRole === "FREELANCER" ? (
                 <div>
-                    <Header />
+                    <FreeLancerHeader />
                 <Redirect to="/freelancer"/>
                 </div>) : (
                     <div>
-                        <Header />
+                        <RecruiterHeader />
                     <Redirect to="/recruiter"/>
                     </div>)) : (<Component {...props} />)  
     )} />
 );
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.uid,
+    isAuthenticated: !!state.auth.loggedIn,
     checkRole: state.auth.roleName
 });
 

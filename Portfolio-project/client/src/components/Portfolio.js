@@ -14,7 +14,7 @@ function Portfolio({setDashboardCV}){
             const result = await setDashboardCV();
             const imageStr = arrayBufferToBase64(result.data);
             
-            setUserCV(`data:image/jpeg;base64,${imageStr}`)
+            setUserCV(`data:image/pdf;base64,${imageStr}`)
         }
         // <ImageLoader file={fetchData()} alt='some text'/>
         fetchData();

@@ -11,13 +11,6 @@ export const logout = () => ({
     type: "LOGOUT"
 });
 
-
-
-export const startLogout = async () =>{
-    localStorage.removeItem("token")
-    await logout();
-}
-
 export const startLogin = (username, password) => { 
         const result = Axios.post("http://localhost:5000/login", {
             username,
@@ -31,18 +24,9 @@ export const startLogin = (username, password) => {
             }
         });
         return result;
-        // await login(something.data.result[0].userId)
         
 }
-// .then((res)=>{
-//     
-//     return userAuthentication();
-// }).then((res)=>{
-//     console.log("2", res)
-//     const uid = res.data.result[0].userId;
-//     return login(uid);
 
-// })
 
 export const userAuthentication = () => {
         Axios.get("http://localhost:5000/checkAuth",{

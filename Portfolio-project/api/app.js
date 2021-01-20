@@ -2,10 +2,13 @@ const mysql = require('mysql');
 const express = require('express');
 const cors = require("cors");
 const app = express();
+const multer = require('multer');
 app.use(express.json());
 app.use(cors());
 
 const jwt = require("jsonwebtoken");
+const x = multer({destination:"./upload"})
+const fileMiddleware = x.single("CV");
 
 const verifyJWT = (req, res, next) =>{
   const token = req.headers["x-access-token"]
@@ -50,10 +53,16 @@ app.post("/register", (req, res)=>{
     if(err){
       throw err
     }else{
-      console.log(row)
+      // console.log(row)
     }
   });
 });
+
+// app.post('/postmyCVdaddy', fileMiddleware, (req, res)=>{
+//   console.log(req.file);
+//   console.log(req.body);
+//   console.log("congrats we won!");
+// })
 
 app.post("/addNewUserInfo", (req, res)=>{
   const firstName = req.body.firstName;
@@ -66,7 +75,7 @@ app.post("/addNewUserInfo", (req, res)=>{
     if(err){
       throw err
     }else{
-      console.log(rows)
+      // console.log(rows)
     }
   })
 })
@@ -80,9 +89,9 @@ app.post("/getUser",(req, res)=>{
   
   const id = req.body.id;
 
-  connection.query("SELECT * FROM user_info WHERE userId=?", [id], (err, rows)=>{
+  connection.query("SELECT * FROM user_info u, contact_me c WHERE c.userId=u.userId AND u.userId=?", [id], (err, rows)=>{
     if(err){
-      console.log(err);
+      throw err
     }else{
       res.send(rows);
     }
@@ -95,14 +104,61 @@ app.post("/getUserCV",(req, res)=>{
 
   connection.query("SELECT * FROM user_info WHERE userId=?", [id], (err, rows)=>{
     if(err){
-      console.log(err);
+      throw err
     }else{
       res.send(rows);
     }
   })
 })
 
+app.post("/editDashboard",fileMiddleware, (req, res)=>{
+  const id = req.body.id
+  const firstName = req.body.firstName
+  const lastName = req.body.lastName 
+  const userWork = req.body.userWork
+  const userEducation = req.body.userEducation
+  const userBio = req.body.userBio
+  // const userCV = req.file
+  // console.log(id);
+  connection.query("UPDATE user_info SET firstName=?, lastName=?, userWork=?, userEducation=?, userBio=?, WHERE userId = ?", [firstName,lastName,userWork, userEducation, userBio, id],(err,rows)=>{
+    if(err){
+      // throw err
+    }else{
+    
+      res.send(rows)
+    }
+  })
+})
 
+app.post("/editContact", (req, res)=>{
+  const id = req.body.id
+  const insta = req.body.instagramLink
+  const linked = req.body.linkedInLink
+  const fb = req.body.facebookLink 
+  const git = req.body.githublink
+  // console.log(req.body)
+  connection.query("UPDATE contact_me SET instagramLink=?, linkedInLink=?, facebookLink=?, githublink=? WHERE userId = ?", [insta,linked,fb,git, id],(err,rows)=>{
+    if(err){
+      throw err
+    }else{
+      // console.log(res)
+      res.send(rows)
+    }
+  })
+})
+
+app.post("/getContactInfo", (req, res)=>{
+  
+  const id = req.body.id;
+
+  connection.query("SELECT * FROM contact_me c, user u WHERE u.userId = c.userId AND c.userId=?", [id], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
 
 app.post("/login",(req, res)=>{
   const username = req.body.username;

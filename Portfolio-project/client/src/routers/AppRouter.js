@@ -1,6 +1,5 @@
 import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
-import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
 import FreeLancerDashboard from '../components/FreeLancerDashboard';
 import AdminDashboard from '../components/AdminDashboard';

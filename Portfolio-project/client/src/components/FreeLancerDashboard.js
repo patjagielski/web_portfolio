@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import Axios from "axios";
-import { setDashboard } from '../actions/dashboardInfo';
+import { startSetDashboard } from '../actions/dashboardInfo';
+import ContactMe from './ContactMe'
 
 
-function FreeLancerDashboard({setDashboard}){
+function FreeLancerDashboard({startSetDashboard}){
     /**
      * Display first name & last name
      * Display all table info in appropriate areas
@@ -19,7 +20,7 @@ function FreeLancerDashboard({setDashboard}){
     
     useEffect(()=> {
         async function fetchData() {
-            const result = await setDashboard();
+            const result = await startSetDashboard();
             setFirstName(result.firstName);
             setLastName(result.lastName);
             setUserWork(result.userWork);
@@ -55,7 +56,7 @@ function FreeLancerDashboard({setDashboard}){
                 </div>
                 ---------------------------------
                 <div>
-                    <h2>Projects</h2>
+                    <ContactMe />
                 </div>
             </div>
         </div>
@@ -63,7 +64,7 @@ function FreeLancerDashboard({setDashboard}){
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    setDashboard: () => dispatch(setDashboard())
+    startSetDashboard: () => dispatch(startSetDashboard())
 });
 
 export default connect(undefined, mapDispatchToProps)(FreeLancerDashboard);

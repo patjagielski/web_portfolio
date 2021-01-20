@@ -1,28 +1,16 @@
 import React, { useState } from "react";
-import Header from './Header';
 import DashbaordForm from "./DashboardForm";
 import {connect} from 'react-redux';
+import {startAddDashboard} from '../actions/dashboardInfo'
+import { history } from "../routers/AppRouter";
 
-function AddDashboard(){
+function AddDashboard({startAddDashboard}){
 
-    
-    
-    // const addNewUserInfo = () =>{
-    //     Axios.post("http://localhost:5000/addNewUserInfo", {
-    //         firstName,
-    //         lastName,
-    //         userEducation,
-    //         userWork,
-    //         userCV
-    //     }).then((res)=>{
-    //         console.log(res); 
-    //     })
-    // }
    
-    const handleSubmit = (dashboardInfo) =>{
+    const handleSubmit = (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) =>{
         //create axios post 
-        this.props.startAddDashboard(dashboardInfo);
-        this.props.history.push("/home");
+        startAddDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink);
+        history.push("/home");
         //dipatch redux
     }
 
@@ -33,7 +21,7 @@ function AddDashboard(){
         </div>
         <div>
             <DashbaordForm 
-                onSubmit={handleSubmit}
+                customSubmit={handleSubmit}
             />
         </div>
         </div>
@@ -42,7 +30,7 @@ function AddDashboard(){
 
 
 const mapDispatchToProps = (dispatch) => ({
-    startAddDashboard: (dashboardInfo) => dispatch(startAddDashboard(dashboardInfo))
+    startAddDashboard: (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) => dispatch(startAddDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink))
 });
 
 

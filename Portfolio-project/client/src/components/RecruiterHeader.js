@@ -4,10 +4,10 @@ import {startLogout} from '../actions/auth';
 
 
 
-const Header = () => (
+const RecruiterHeader = () => (
     <header>
         <div>
-            <NavLink to='/home' activeClassName='is-active' exact={true}>Dashboard</NavLink>
+            <NavLink to='/recruiter' activeClassName='is-active' exact={true}>Dashboard</NavLink>
             <br />
             <NavLink to='/portfolio' activeClassName='is-active' exact={true}>Portfolio</NavLink>
             <br />
@@ -18,4 +18,4 @@ const Header = () => (
     </header>
 );
 
-export default Header;
+export default RecruiterHeader;
