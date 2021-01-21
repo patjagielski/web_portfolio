@@ -53,7 +53,7 @@ export const startEditDashboard = (firstName, lastName, userWork, userEducation,
     return(dispatch, getState) => {
         const uid = getState().auth.uid;
         const newFomr = new FormData()
-        console.log(typeof userCV)
+        console.log(firstName, "|", lastName)
         newFomr.append("CV", userCV, userCV.name);
         newFomr.append( "id", uid);
         newFomr.append("firstName", firstName);

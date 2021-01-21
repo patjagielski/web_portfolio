@@ -18,17 +18,17 @@ function DashbaordForm({dashboardState, customSubmit}){
     const onFirstNameChange = (e) => {
         e.preventDefault();
         const name = e.target.value;
-        if(!name || name.match(/^[a-zA-Z ]+$/)){
-            return name
-        }
+        // if(!name || name.match(/^[a-zA-Z ]+$/)){
+            return name;
+        // }
     }
 
     const onLastNameChange = (e) => {
         e.preventDefault();
         const name = e.target.value;
-        if(!name || name.match(/^[a-zA-Z ]+$/)){
-            setFirstName(dashboardState.firstName)   
-        }
+        // if(!name || name.match(/^[a-zA-Z ]+$/)){
+            return name;
+        // }
     }
 
     const handleSubmit = (e) =>{

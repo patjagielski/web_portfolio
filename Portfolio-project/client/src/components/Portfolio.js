@@ -34,8 +34,6 @@ function Portfolio({setDashboardCV}){
         <img
         src={userCV}
         alt='Helpful alt text'/>
-       
-        
         
     </div>
     );

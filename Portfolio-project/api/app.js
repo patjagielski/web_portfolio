@@ -5,9 +5,11 @@ const app = express();
 const multer = require('multer');
 app.use(express.json());
 app.use(cors());
+const fs = require('fs');
+const path = require('path');
 
 const jwt = require("jsonwebtoken");
-const x = multer({destination:"./upload"})
+const x = multer({dest:"upload/"})
 const fileMiddleware = x.single("CV");
 
 const verifyJWT = (req, res, next) =>{
@@ -114,13 +116,16 @@ app.post("/getUserCV",(req, res)=>{
 app.post("/editDashboard",fileMiddleware, (req, res)=>{
   const id = req.body.id
   const firstName = req.body.firstName
-  const lastName = req.body.lastName 
+  const lastName = req.body.lastName
   const userWork = req.body.userWork
   const userEducation = req.body.userEducation
   const userBio = req.body.userBio
   // const userCV = req.file
-  // console.log(id);
-  connection.query("UPDATE user_info SET firstName=?, lastName=?, userWork=?, userEducation=?, userBio=?, WHERE userId = ?", [firstName,lastName,userWork, userEducation, userBio, id],(err,rows)=>{
+  const fileName = req.file.filename;
+  const filePath = path.join(__dirname,"upload",fileName)
+  const fileBlob = fs.readFileSync(filePath);
+
+  connection.query("UPDATE user_info SET firstName=?, lastName=?, userWork=?, userEducation=?, userBio=?, userCV=? WHERE userId = ?", [firstName,lastName,userWork, userEducation, userBio, fileBlob, id],(err,rows)=>{
     if(err){
       // throw err
     }else{
@@ -129,6 +134,8 @@ app.post("/editDashboard",fileMiddleware, (req, res)=>{
     }
   })
 })
+// const fileName = req.file.filename;
+// const fileType = req.file.mimetype;
 
 app.post("/editContact", (req, res)=>{
   const id = req.body.id
