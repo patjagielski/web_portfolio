@@ -134,8 +134,7 @@ app.post("/editDashboard",fileMiddleware, (req, res)=>{
     }
   })
 })
-// const fileName = req.file.filename;
-// const fileType = req.file.mimetype;
+
 
 app.post("/editContact", (req, res)=>{
   const id = req.body.id
@@ -167,6 +166,28 @@ app.post("/getContactInfo", (req, res)=>{
   })
 })
 
+app.get("/getJobs", (req, res)=>{
+
+  connection.query("SELECT * FROM jobs_listings j, user_info u WHERE u.userId = j.userId", (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.get("/getAllusers", (req, res)=>{
+
+  connection.query("SELECT * FROM user u, role_user ru, roles r, user_info ui WHERE u.userId = ui.userId AND u.userId = ru.userID AND r.roleId = ru.roleId", (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
 app.post("/login",(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
@@ -189,6 +210,10 @@ app.post("/login",(req, res)=>{
       res.json({auth: false, message: "mp user exists"})
     }
   })
+})
+
+app.post("/removeUser", (req, res)=>{
+  //finish endpoint
 })
 
 const port = process.env.PORT || 5000;

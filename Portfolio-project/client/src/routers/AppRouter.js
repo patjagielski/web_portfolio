@@ -7,7 +7,7 @@ import RecruiterDashboard from '../components/RecruiterDashboard';
 import AddDashboard from '../components/AddDashboard';
 import EditDashboard from '../components/EditDashboard';
 import Portfolio from '../components/Portfolio';
-import ContactMe from '../components/ContactMe';
+import ViewJobListings from '../components/ViewJobListings';
 import NotFound from '../components/NotFound';
 import PrivateRoute from './PrivateRouter';
 import PublicRoute from './PublicRouter';
@@ -24,7 +24,7 @@ const AppRouter = () => (
                 <PrivateRoute path='/admin' component={AdminDashboard}/>
                 <PrivateRoute path='/recruiter' component={RecruiterDashboard}/>
                 <PrivateRoute path='/portfolio' component={Portfolio} />
-                <PrivateRoute path='/contactme' component={ContactMe} />
+                <PrivateRoute path='/ViewJobListings' component={ViewJobListings} />
                 <PrivateRoute path='/AddDashboard' component={AddDashboard}/>
                 <PrivateRoute path='/EditDashboard' component={EditDashboard}/>
                 <PrivateRoute component={NotFound} exact={true} />

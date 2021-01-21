@@ -126,3 +126,11 @@ export const startSetContactMePage = () => {
         return result;
     }
 }
+
+export const getJobs = () => {
+    return()=>{
+        return Axios.get("http://localhost:5000/getJobs").then((res)=>{
+            return res.data
+        })
+    }
+}

@@ -15,7 +15,7 @@ const FreeLancerHeader = ({logout}) => {
             <br />
             <NavLink to='/portfolio' activeClassName='is-active' exact={true}>Portfolio</NavLink>
             <br />
-            <NavLink to='/contactme' activeClassName='is-active' exact={true}>Contact me</NavLink>
+            <NavLink to='/ViewJobListings' activeClassName='is-active' exact={true}>View Jobs</NavLink>
             <br />
             <button onClick={logout}>Logout</button>
         </div>
