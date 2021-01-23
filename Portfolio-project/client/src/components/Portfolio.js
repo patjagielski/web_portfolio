@@ -3,44 +3,33 @@ import { connect } from 'react-redux';
 import Axios from "axios";
 import { setDashboardCV } from '../actions/dashboardInfo';
 import ImageLoader from 'react-image-file';
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-function Portfolio({setDashboardCV}){
+function Portfolio({getUid}){
 
-    const [userCV, setUserCV] = useState('');
-
+    // const [userCV, setUserCV] = useState('');
     
-    useEffect(()=> {
-        async function fetchData() {
-            const result = await setDashboardCV();
-            const imageStr = arrayBufferToBase64(result.data);
-            
-            setUserCV(`data:image/pdf;base64,${imageStr}`)
-        }
-        // <ImageLoader file={fetchData()} alt='some text'/>
-        fetchData();
-        }, []);
-
-        const arrayBufferToBase64 =(buffer) => {
-            var binary = '';
-            var bytes = [].slice.call(new Uint8Array(buffer));
-            bytes.forEach((b) => binary += String.fromCharCode(b));
-
-            return window.btoa(binary);
-        };
+        
 
     return(
     <div>
         <h1> This here is my Portfolio </h1>
-        <img
-        src={userCV}
-        alt='Helpful alt text'/>
+        <Document
+        file= {{url:`http://localhost:5000/startGetCV?id=${getUid}`}}
+        onLoadSuccess={(()=>{
+            console.log('success');
+        })}
+      >
+        <Page pageNumber={1} />
+      </Document>
         
     </div>
     );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    setDashboardCV: () => dispatch(setDashboardCV())
+const mapStateToProps = (state) => ({
+    getUid: () => state.auth.uid
 });
 
-export default connect(undefined, mapDispatchToProps)(Portfolio);
+export default connect(mapStateToProps)(Portfolio);

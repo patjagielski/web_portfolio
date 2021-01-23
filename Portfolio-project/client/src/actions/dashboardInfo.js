@@ -100,12 +100,10 @@ export const startSetDashboard = () =>{
 export const setDashboardCV = (uid) =>{
     return(dispatch, getState) =>{
         const uid = getState().auth.uid;
-        const result = Axios.post("http://localhost:5000/getUserCV", {
-            id: uid,
-            }).then((res)=>{
+        const result = Axios.get(`http://localhost:5000/startGetCV?id=${uid}`).then((res)=>{
                 if(res){
-                    // console.log(res.data[0].userCV)
-                    return res.data[0].userCV;
+                    console.log("something",)
+                    return res.data
                 }else{
                     console.log("errror");
                     console.log(uid);
@@ -121,6 +119,7 @@ export const startSetContactMePage = () => {
         const result = Axios.post("http://localhost:5000/getContactInfo", {
             id:uid,
         }).then(async(res)=>{
+            console.log(res)
             return res;
         });
         return result;

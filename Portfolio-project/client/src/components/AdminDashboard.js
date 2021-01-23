@@ -5,8 +5,10 @@ import {getAllUsers} from '../actions/admin';
 import {FreelanceUsers} from './FreelanceUsers';
 import {AdminUsers} from './AdminUsers';
 import {RecruiterUsers} from './RecruiterUsers';
+import {startRemoveUser} from '../actions/admin';
+import { history } from '../routers/AppRouter';
 
-function AdminDashboard({getAllUsers}){
+function AdminDashboard({getAllUsers, startRemoveUser}){
     
     const [baseState, setBaseState] = useState("");
 
@@ -14,10 +16,14 @@ function AdminDashboard({getAllUsers}){
         async function fetchData() {
             const result = await getAllUsers();
             setBaseState(result);
-            console.log(baseState);
         }
         fetchData();
     },[]);
+
+    const handleOnClick = (id) => {
+        startRemoveUser(id);
+        history.push('/admin');
+    }
 
     return(
         <div>
@@ -31,7 +37,7 @@ function AdminDashboard({getAllUsers}){
                 ) : (
                     baseState.map((values, index)=>{
                         if(values.roleName === "FREELANCER"){
-                            return <FreelanceUsers key={index} {...values} />
+                            return <div><FreelanceUsers key={values.userId} {...values} /> <button onClick={((e)=>{handleOnClick(values.userId)})}>X</button> </div>
                         }
                     })
                 )
@@ -47,7 +53,7 @@ function AdminDashboard({getAllUsers}){
                 ) : (
                     baseState.map((values, index)=>{
                         if(values.roleName === "ADMIN"){
-                            return <AdminUsers key={index} {...values} />
+                            return <div><AdminUsers key={values.userId} {...values} /> <button>X</button> </div>
                         }
                     })
                 )
@@ -63,7 +69,7 @@ function AdminDashboard({getAllUsers}){
                 ) : (
                     baseState.map((values,index)=>{
                         if(values.roleName === "RECRUITER"){
-                            return <RecruiterUsers key={index} {...values} />
+                            return <div><RecruiterUsers key={values.userId} {...values} /> <button onClick={((e)=>{handleOnClick(values.userId)})}>X</button> </div>
                         }
                     })
                 )
@@ -74,7 +80,8 @@ function AdminDashboard({getAllUsers}){
 }
 
 const mapDispatchToProps = (dispatch)=>({
-    getAllUsers: () => dispatch(getAllUsers())
+    getAllUsers: () => dispatch(getAllUsers()),
+    startRemoveUser: (uid) => dispatch(startRemoveUser(uid))
 });
 
 export default connect(undefined, mapDispatchToProps)(AdminDashboard)

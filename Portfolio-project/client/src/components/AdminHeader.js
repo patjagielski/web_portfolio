@@ -1,10 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {startLogout} from '../actions/auth';
+import {logout} from '../actions/auth';
 
 
 
-const AdminHeader = () => (
+const AdminHeader = ({logout}) => (
     <header>
         <div>
             <NavLink to='/admin' activeClassName='is-active' exact={true}>Dashboard</NavLink>
@@ -13,9 +14,13 @@ const AdminHeader = () => (
             <br />
             <NavLink to='/contactme' activeClassName='is-active' exact={true}>Contact me</NavLink>
             <br />
-            <button onClick={(startLogout)}>Logout</button>
+            <button onClick={(logout)}>Logout</button>
         </div>
     </header>
 );
 
-export default AdminHeader;
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(undefined, mapDispatchToProps)(AdminHeader);

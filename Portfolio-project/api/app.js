@@ -3,12 +3,12 @@ const express = require('express');
 const cors = require("cors");
 const app = express();
 const multer = require('multer');
-app.use(express.json());
-app.use(cors());
 const fs = require('fs');
 const path = require('path');
-
 const jwt = require("jsonwebtoken");
+app.use(express.json());
+app.use(cors());
+app.use(express.static(path.join("./upload/")));
 const x = multer({dest:"upload/"})
 const fileMiddleware = x.single("CV");
 
@@ -100,6 +100,19 @@ app.post("/getUser",(req, res)=>{
   })
 })
 
+app.get("/startGetCV", (req, res)=>{
+  const id = 2
+  
+  connection.query("SELECT userCVFilePath, userCVFileType, userCVName FROM user_info WHERE userId=?", [id], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      console.log(id);
+      res.sendFile(path.join(__dirname, `/upload/${rows[0].userCVName}`));
+    }
+  })
+})
+
 app.post("/getUserCV",(req, res)=>{
   
   const id = req.body.id;
@@ -122,10 +135,10 @@ app.post("/editDashboard",fileMiddleware, (req, res)=>{
   const userBio = req.body.userBio
   // const userCV = req.file
   const fileName = req.file.filename;
+  const fileType = req.file.mimetype;
   const filePath = path.join(__dirname,"upload",fileName)
-  const fileBlob = fs.readFileSync(filePath);
 
-  connection.query("UPDATE user_info SET firstName=?, lastName=?, userWork=?, userEducation=?, userBio=?, userCV=? WHERE userId = ?", [firstName,lastName,userWork, userEducation, userBio, fileBlob, id],(err,rows)=>{
+  connection.query("UPDATE user_info SET firstName=?, lastName=?, userWork=?, userEducation=?, userBio=?, userCVName=?, userCVFilePath=?, userCVFileType=? WHERE userId = ?", [firstName,lastName,userWork, userEducation, userBio, fileName, filePath, fileType, id],(err,rows)=>{
     if(err){
       // throw err
     }else{
@@ -213,7 +226,14 @@ app.post("/login",(req, res)=>{
 })
 
 app.post("/removeUser", (req, res)=>{
-  //finish endpoint
+  const id = req.body.id;
+  connection.query("DELETE FROM user WHERE userId = ?",[id], (err, rows)=>{
+    if(err){
+      throw err;
+    }else{
+      res.send(rows);
+    }
+  })
 })
 
 const port = process.env.PORT || 5000;

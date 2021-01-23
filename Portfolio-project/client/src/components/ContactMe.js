@@ -13,6 +13,7 @@ const ContactMe = ({startSetContactMePage}) => {
     useEffect(()=>{
         async function fetchData(){
             const result = await startSetContactMePage();
+            console.log(result);
             setEmail(result.data[0].email);
             setInstagramLink(result.data[0].instagramLink)
             setFacebookLink(result.data[0].FacebookLink)
