@@ -1,7 +1,4 @@
 import Axios from 'axios';
-import { compose } from 'redux';
-
-
 
 export const setDashboard = (dashboardInfo)=>({
     type: "SET_DASHBOARD",
@@ -86,10 +83,11 @@ export const startSetDashboard = () =>{
         }).then( (res)=>{
             if(res.data.length === 1){
                 dispatch(setDashboard(res.data[0]));
+                console.log(res.data);
                 return res.data[0];
             }else{
                 console.log("errror");
-                console.log(uid);
+                console.log(res);
             }
         });
 
@@ -126,10 +124,19 @@ export const startSetContactMePage = () => {
     }
 }
 
-export const getJobs = () => {
+export const getJobs = (pageNumber) => {
     return()=>{
-        return Axios.get("http://localhost:5000/getJobs").then((res)=>{
+        console.log(pageNumber);
+        return Axios.get(`http://localhost:5000/getJobs?pageNo=${pageNumber}`).then((res)=>{
             return res.data
+        })
+    }
+}
+
+export const getJobCount = () => {
+    return()=>{
+        return Axios.get(`http://localhost:5000/getJobCount`).then((res)=>{
+            return res.data[0].numberOfJobs;
         })
     }
 }

@@ -18,7 +18,7 @@ function EditDashboard({startEditDashboard}){
     return(
         <div>
         <div>
-            <h1> Create a new Dashboard </h1>
+            <h1> Edit Your Job Here! </h1>
         </div>
         <div>
             <DashbaordForm 

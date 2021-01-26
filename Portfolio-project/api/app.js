@@ -6,6 +6,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const jwt = require("jsonwebtoken");
+const { send } = require('process');
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join("./upload/")));
@@ -180,8 +181,20 @@ app.post("/getContactInfo", (req, res)=>{
 })
 
 app.get("/getJobs", (req, res)=>{
+  const pageNo = req.query.pageNo;
 
-  connection.query("SELECT * FROM jobs_listings j, user_info u WHERE u.userId = j.userId", (err, rows)=>{
+  connection.query("SELECT * FROM jobs_listings j, user_info u WHERE u.userId = j.userId LIMIT ?,2 ",[(pageNo-1)*2], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.get("/getJobCount", (req, res)=>{
+
+  connection.query("SELECT Count(1) as numberOfJobs FROM jobs_listings", (err, rows)=>{
     if(err){
       throw err
     }else{
@@ -195,6 +208,16 @@ app.get("/getAllusers", (req, res)=>{
   connection.query("SELECT * FROM user u, role_user ru, roles r, user_info ui WHERE u.userId = ui.userId AND u.userId = ru.userID AND r.roleId = ru.roleId", (err, rows)=>{
     if(err){
       throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.get("/allFreelancers",(req, res)=>{
+  connection.query("SELECT * FROM  user_info ui, role_user ru WHERE ui.userId = ru.userID AND ru.roleId = 3;",(err, rows)=>{
+    if(err){
+      res.send({err})
     }else{
       res.send(rows);
     }
@@ -231,6 +254,64 @@ app.post("/removeUser", (req, res)=>{
     if(err){
       throw err;
     }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.get("/getRecruiterJobs", (req, res)=>{
+    const id = req.query.id;
+
+    connection.query("SELECT * FROM jobs_listings WHERE userId=?", [id], (err, rows)=>{
+      if(err){
+        throw err;
+      }else{
+        res.send(rows);
+      }
+    })
+})
+
+app.post("/createJobPosting", (req, res)=>{
+  const id = req.body.id;
+  const jobTitle = req.body.jobTitle;
+  const techRequirements = req.body.techRequirements;
+  const levelOfExpertise = req.body.levelOfExpertise;
+  const jobDescription = req.body.jobDescription;
+
+  connection.query("INSERT INTO jobs_listings(userId, jobTitle, techRequirements, levelOfExpertise, jobDescription) VALUES (?,?,?,?,?)", [id, jobTitle, techRequirements, levelOfExpertise, jobDescription], (err, rows)=>{
+    if(err){
+      throw err;
+    }else{
+      console.log("job created");
+      res.send(rows);
+    }
+  })
+})
+
+app.get("/getJobListing", (req, res)=>{
+  const id = req.query.jobId;
+  console.log(id);
+  connection.query("SELECT * FROM jobs_listings WHERE jobId = ?", [id], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.post("/editJobPosting", (req, res)=>{
+  const id = req.body.id;
+  const jobTitle = req.body.jobTitle;
+  const techRequirements = req.body.techRequirements;
+  const levelOfExpertise = req.body.levelOfExpertise;
+  const jobDescription = req.body.jobDescription;
+
+  connection.query("UPDATE jobs_listings SET jobTitle = ?, techRequirements = ?, levelOfExpertise=?, jobDescription=? WHERE jobId = ?", [jobTitle, techRequirements, levelOfExpertise, jobDescription, id], (err, rows)=>{
+    if(err){
+      throw err;
+    }else{
+      console.log("job created");
       res.send(rows);
     }
   })
