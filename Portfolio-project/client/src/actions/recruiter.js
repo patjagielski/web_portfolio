@@ -7,17 +7,22 @@ export const setRecruiterJob = (jobId, job) => ({
     job
 })
 
+export const removeJob = (id)=>({
+    type:"REMOVE_JOB",
+    id
+})
+
 
 
 export const getRecruiterJobs = () =>{
     return(dispatch, getState)=>{
         const uid = getState().auth.uid;
         const jobIdArry = [];
-        return Axios.get(`http://localhost:5000/getRecruiterJobs?id=${uid}`).then((res)=>{
+        return Axios.get(`http://localhost:5000/getRecruiterJobs?id=${uid}`).then(async(res)=>{
             res.data.filter(obj=>{
                 jobIdArry.push(obj.jobId);
             })
-            // dispatch(setRecruiterJob(jobIdArry, res.data));
+            await dispatch(setRecruiterJob(jobIdArry, res.data));
             return res.data;
         })
     }
@@ -73,6 +78,21 @@ export const editJobPosting = (jobTitle, techRequirements, levelOfExpertise, job
         }).then((res)=>{
             if(res){
                 return res;
+            }else{
+                console.log("error");
+            }
+        })
+    }
+}
+
+export const startRemoveJob = (id)=>{
+    return(dispatch,getState)=>{
+        return Axios.post("http://localhost:5000/removeJobPosting",{
+            id
+        }).then((res)=>{
+            if(res){
+                dispatch(removeJob(id))
+               console.log("successfully removed");
             }else{
                 console.log("error");
             }

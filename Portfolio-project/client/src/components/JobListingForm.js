@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 
 function JobListingForm({customSubmit, job}){
 
-    const [jobTitle, setJobTitle] = useState(job.jobTitle)
-    const [techRequirements, setTechRequirements] = useState(job.techRequirements)
-    const [levelOfExpertise, setlevelOfExpertise] = useState(job.levelOfExpertise)
-    const [jobDescription, setJobDescription] = useState(job.jobDescription)
+    const [jobTitle, setJobTitle] = useState(job ? job[0].job.jobTitle : "")
+    const [techRequirements, setTechRequirements] = useState(job ? job[0].job.techRequirements : "")
+    const [levelOfExpertise, setlevelOfExpertise] = useState(job ? job[0].job.levelOfExpertise : "")
+    const [jobDescription, setJobDescription] = useState(job ?job[0].job.jobDescription : "")
 
 
     const handleSubmit = (e) =>{
@@ -51,7 +51,7 @@ function JobListingForm({customSubmit, job}){
 }
 
 const mapStateToProps = (state)=>({
-    job: state.rec.job[0]
+    job: state.rec.job
 })
 
 export default connect(mapStateToProps)(JobListingForm);

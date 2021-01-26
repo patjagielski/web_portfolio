@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getRecruiterJobs, startEditJobListing } from '../actions/recruiter';
+import { getRecruiterJobs, startEditJobListing, startRemoveJob } from '../actions/recruiter';
 import { RecruiterViewJobItem } from './RecruiterViewJobItem';
 import { history } from "../routers/AppRouter";
 
-const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing}) => {
+const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing, startRemoveJob}) => {
     const [baseState, setBaseState] = useState("");
     useEffect(()=>{
         async function fetchData(){
@@ -18,6 +18,10 @@ const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing}) => {
         await startEditJobListing(val.jobId);
         history.push('/EditJobListing')
     }
+    const handleOnRemove = async(val)=>{
+        await startRemoveJob(val.jobId);
+        history.push('/recruiter');
+    }
 
     return(
         <div>
@@ -26,7 +30,7 @@ const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing}) => {
                    <span>You haven't created a job listing yet</span>
                ):(
                    baseState.map((val)=>{
-                       return <div><RecruiterViewJobItem key={val.jobId} {...val}/><button>X</button>
+                       return <div><RecruiterViewJobItem key={val.jobId} {...val}/><button onClick={(()=>{handleOnRemove(val)})}>X</button>
                        <button onClick={((e)=>{handleOnClick(e, val)})}>Edit</button></div>
                    })
                ) 
@@ -37,7 +41,8 @@ const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing}) => {
 
 const mapDispatchToProps = (dispatch)=>({
     getRecruiterJobs: () => dispatch(getRecruiterJobs()),
-    startEditJobListing: (jobId)=> dispatch(startEditJobListing(jobId))
+    startEditJobListing: (jobId)=> dispatch(startEditJobListing(jobId)),
+    startRemoveJob:(id)=>dispatch(startRemoveJob(id))
 })
 
 

@@ -317,6 +317,17 @@ app.post("/editJobPosting", (req, res)=>{
   })
 })
 
+app.post("/removeJobPosting", (req, res)=>{
+  const id = req.body.id;
+  connection.query("DELETE FROM jobs_listings WHERE jobId = ?",[id], (err, rows)=>{
+    if(err){
+      throw err;
+    }else{
+      res.send(rows);
+    }
+  })
+})
+
 const port = process.env.PORT || 5000;
 app.listen(port);
 console.log("app is listening to " + port)
