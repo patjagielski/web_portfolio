@@ -7,10 +7,7 @@ import ContactMe from './ContactMe'
 
 
 function FreeLancerDashboard({startSetDashboard}){
-    /**
-     * Display first name & last name
-     * Display all table info in appropriate areas
-     */
+    
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [userWork, setUserWork] = useState("");
@@ -21,11 +18,15 @@ function FreeLancerDashboard({startSetDashboard}){
     useEffect(()=> {
         async function fetchData() {
             const result = await startSetDashboard();
-            setFirstName(result.firstName);
-            setLastName(result.lastName);
-            setUserWork(result.userWork);
-            setUserEducation(result.userEducation);
-            setUserBio(result.userBio);
+            console.log(result);
+            if(result){
+                setFirstName(result[0].firstName);
+                setLastName(result[0].lastName);
+                setUserWork(result[0].userWork);
+                setUserEducation(result[0].userEducation);
+                setUserBio(result[0].userBio);
+            }
+            
         }
         fetchData();
         }, []);
@@ -34,13 +35,12 @@ function FreeLancerDashboard({startSetDashboard}){
         <div>
         <br/>
             <div>
-                <Link to="/AddDashboard">Add new Info</Link>
-                <br/>
                 <Link to="/EditDashboard">Edit Info</Link>
             </div>
             <div>
                 <h1> Welcome to {firstName} {lastName}'s Portfolio </h1>
                 <p> {userBio}</p>
+                {firstName === "" ? (<div>Looks like you're missing some info click here to add your dashboard<Link to="/AddDashboard">Add Info</Link></div>): ("")}
                 <div>
                     <h2>Bio/about me</h2>
                 </div>

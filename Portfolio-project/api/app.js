@@ -51,15 +51,52 @@ app.post("/register", (req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-
-  connection.query("INSERT INTO user (username, password, email) VALUES (?,?,?)", [username, password, email], (err, row)=>{
-    if(err){
-      throw err
-    }else{
-      // console.log(row)
-    }
-  });
+  const id = req.body.id;
+    
+    connection.query("INSERT INTO user (userId, username, password, email) VALUES (?,?,?,?)",[id ,username, password, email],(err, rows)=>{
+      if(err){
+        return connection.rollback(()=>{
+          throw err
+        })
+      }else{
+        res.send(rows);
+      }
+    });
+  
 });
+
+app.post("/registerRole", (req, res)=>{
+
+  const type = req.body.type;
+  const id = req.body.id;
+    
+    connection.query("INSERT INTO role_user (roleId, userID) VALUES (?,?)",[type , id],(err, rows)=>{
+      if(err){
+        return connection.rollback(()=>{
+          throw err
+        })
+      }else{
+        res.send(rows);
+      }
+    });
+  
+});
+
+// connection.query("SELECT * user WHERE username=? AND password=? AND email=?",[username, password, email],(err, rows)=>{
+//   if(err){
+//     console.log(rows);
+//     //     const id = rows.userId
+//     //   const token = jwt.sign({id},"jwtSecret", {
+//     //   expiresIn: 300,
+//     // })
+//     // console.log("creating token");
+
+//     // res.json({auth: true, token: token, result: rows})
+//     // console.log('successfully registered user')
+//     }
+//   })
+
+
 
 // app.post('/postmyCVdaddy', fileMiddleware, (req, res)=>{
 //   console.log(req.file);
@@ -67,21 +104,7 @@ app.post("/register", (req, res)=>{
 //   console.log("congrats we won!");
 // })
 
-app.post("/addNewUserInfo", (req, res)=>{
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const userWork = req.body.userWork;
-  const userEducation = req.body.userEducation;
-  const userCV = req.body.userCV;
 
-  connection.query("INSERT INTO user_info(userWork, userEducation, firstName, lastName, cv) VALUES(?,?,?,?,?)", [firstName, lastName, userWork, userEducation, userCV], (err, rows)=>{
-    if(err){
-      throw err
-    }else{
-      // console.log(rows)
-    }
-  })
-})
 
 app.get("/checkAuth", verifyJWT,(req, res)=>{
   console.log("Heck yeah I am authenticated ^-^");
@@ -102,7 +125,7 @@ app.post("/getUser",(req, res)=>{
 })
 
 app.get("/startGetCV", (req, res)=>{
-  const id = 2
+  const id = 1;
   
   connection.query("SELECT userCVFilePath, userCVFileType, userCVName FROM user_info WHERE userId=?", [id], (err, rows)=>{
     if(err){
@@ -116,7 +139,7 @@ app.get("/startGetCV", (req, res)=>{
 
 app.post("/getUserCV",(req, res)=>{
   
-  const id = req.body.id;
+  const id = req.query.id;
 
   connection.query("SELECT * FROM user_info WHERE userId=?", [id], (err, rows)=>{
     if(err){
@@ -149,6 +172,26 @@ app.post("/editDashboard",fileMiddleware, (req, res)=>{
   })
 })
 
+app.post("/addNewUserInfo",fileMiddleware, (req, res)=>{
+  const id = req.body.id;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const userWork = req.body.userWork;
+  const userEducation = req.body.userEducation;
+  const fileName = req.file.filename;
+  const fileType = req.file.mimetype;
+  const filePath = path.join(__dirname,"upload",fileName)
+
+  connection.query("INSERT INTO user_info(userId, userWork, userEducation, firstName, lastName, userCVName, userCVFilePath, userCVFileType) VALUES(?,?,?,?,?,?,?,?)", [id,firstName, lastName, userWork, userEducation, fileName,filePath,fileType], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      
+      res.send(rows)
+    }
+  })
+})
+
 
 app.post("/editContact", (req, res)=>{
   const id = req.body.id
@@ -175,6 +218,24 @@ app.post("/getContactInfo", (req, res)=>{
     if(err){
       throw err
     }else{
+      res.send(rows);
+    }
+  })
+})
+
+app.post("/addContact", (req, res)=>{
+  
+  const id = req.body.id;
+  const instagram = req.body.instagramLink;
+  const linked = req.body.linkedInLink;
+  const fb = req.body.facebookLink;
+  const git = req.body.githublink;
+
+  connection.query("INSERT INTO contact_me(userId, instagramLink, LinkedInLink,FacebookLink,GithubLink) VALUES(?,?,?,?,?)", [id, instagram, linked, fb, git], (err, rows)=>{
+    if(err){
+      throw err
+    }else{
+      console.log("here",rows)
       res.send(rows);
     }
   })
@@ -227,14 +288,15 @@ app.get("/allFreelancers",(req, res)=>{
 app.post("/login",(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
-
+  
   connection.query("SELECT * FROM user u, role_user ru, roles r WHERE u.userId = ru.userID AND r.roleId = ru.roleId AND u.username = ? AND u.password = ? ;", [username, password], (err, rows)=>{
     if(err){
       res.send({err:err})
+      
     }
-
+    console.log(rows)
     if(rows.length > 0){
-
+      
       const id = rows[0].id
       const token = jwt.sign({id},"jwtSecret", {
         expiresIn: 300,

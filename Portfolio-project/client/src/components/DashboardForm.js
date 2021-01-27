@@ -4,16 +4,16 @@ import { connect } from "react-redux";
 
 function DashbaordForm({dashboardState, customSubmit}){
 
-    const [firstName, setFirstName] = useState(dashboardState.firstName)
-    const [lastName, setLastName] = useState(dashboardState.lastName)
-    const [userEducation, setUserEducation] = useState(dashboardState.userEducation)
-    const [userWork, setUserWork] = useState(dashboardState.userWork)
-    const [userBio, setUserBio] = useState(dashboardState.userBio)
-    const [userCV, setUserCV] = useState(dashboardState.userCV)
-    const [instagramLink, setInstagramLink] = useState(dashboardState.instagramLink);
-    const [facebookLink, setFacebookLink] = useState(dashboardState.FacebookLink);
-    const [linkedInLink, setLinkedInLink] = useState(dashboardState.LinkedInLink);
-    const [githubLink, setGithubLink] = useState(dashboardState.GithubLink);
+    const [firstName, setFirstName] = useState(dashboardState ? dashboardState.firstName: "")
+    const [lastName, setLastName] = useState(dashboardState ? dashboardState.lastName:"")
+    const [userEducation, setUserEducation] = useState(dashboardState ? dashboardState.userEducation:"")
+    const [userWork, setUserWork] = useState(dashboardState ? dashboardState.userWork:"")
+    const [userBio, setUserBio] = useState(dashboardState ? dashboardState.userBio:"")
+    const [userCV, setUserCV] = useState(dashboardState ? dashboardState.userCV:"")
+    const [instagramLink, setInstagramLink] = useState(dashboardState ? dashboardState.instagramLink:"");
+    const [facebookLink, setFacebookLink] = useState(dashboardState ? dashboardState.FacebookLink:"");
+    const [linkedInLink, setLinkedInLink] = useState(dashboardState ? dashboardState.LinkedInLink:"");
+    const [githubLink, setGithubLink] = useState(dashboardState ? dashboardState.GithubLink:"");
 
     const onFirstNameChange = (e) => {
         e.preventDefault();

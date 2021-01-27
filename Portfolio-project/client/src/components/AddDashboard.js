@@ -9,8 +9,7 @@ function AddDashboard({startAddDashboard}){
    
     const handleSubmit = (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) =>{
         //create axios post 
-        startAddDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink);
-        history.push("/home");
+         startAddDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink);
         //dipatch redux
     }
 

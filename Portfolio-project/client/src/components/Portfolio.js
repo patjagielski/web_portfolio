@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import Axios from "axios";
-import { setDashboardCV } from '../actions/dashboardInfo';
-import ImageLoader from 'react-image-file';
 import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -10,7 +7,6 @@ function Portfolio({getUid}){
 
     // const [userCV, setUserCV] = useState('');
     
-        
 
     return(
     <div>
@@ -29,7 +25,7 @@ function Portfolio({getUid}){
 };
 
 const mapStateToProps = (state) => ({
-    getUid: () => state.auth.uid
+    getUid: state.auth.uid
 });
 
 export default connect(mapStateToProps)(Portfolio);

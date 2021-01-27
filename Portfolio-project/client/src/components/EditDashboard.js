@@ -7,10 +7,10 @@ import { history } from "../routers/AppRouter";
 function EditDashboard({startEditDashboard}){
 
    
-    const handleSubmit = (firstName, lastName, userWork, userEducation, userBio, instagramLink, linkedInLink, facebookLink, githublink) =>{
+    const handleSubmit = (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) =>{
         //create axios post 
         // console.log(firstName)
-        startEditDashboard(firstName, lastName, userWork, userEducation, userBio, instagramLink, linkedInLink, facebookLink, githublink);
+        startEditDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink);
         history.push('/freelancer');
         //dipatch redux
     }

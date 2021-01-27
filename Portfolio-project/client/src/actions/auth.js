@@ -16,6 +16,7 @@ export const startLogin = (username, password) => {
             username,
             password
         }).then((res)=>{
+            console.log(res);
             if(res.data.auth){
                 localStorage.setItem("token", res.data.token)
                 // history.push('/home');
@@ -39,4 +40,97 @@ export const userAuthentication = () => {
                     return false;
                 }
     });
+}
+
+export const registerUser = (userId,regUsername, regPassword, regEmail, type) => {
+    switch(type){
+        case 'FREELANCER':
+            return Axios.post("http://localhost:5000/register", {
+                id:userId,
+                username: regUsername,
+                password: regPassword,
+                email: regEmail,
+                type: 3
+            }).then((res)=>{
+                console.log("success")
+                return Axios.post("http://localhost:5000/registerRole", {
+                    id:userId,
+                    type: 3
+                }).then((res)=>{
+                    return  Axios.post("http://localhost:5000/login", {
+                        username:regUsername,
+                        password:regPassword
+                    }).then((res)=>{
+                        console.log(res);
+                        if(res.data.auth){
+                            localStorage.setItem("token", res.data.token)
+                            // history.push('/home');
+                            console.log(res);
+                            return res;
+                        }
+                    });
+        
+                })
+            });
+        case 'RECRUITER':
+            Axios.post("http://localhost:5000/register", {
+                id:userId,
+                username: regUsername,
+                password: regPassword,
+                email: regEmail,
+                type: 4
+            }).then((res)=>{
+                return Axios.post("http://localhost:5000/registerRole", {
+                    id:userId,
+                    type: 4
+                }).then((res)=>{
+                    return  Axios.post("http://localhost:5000/login", {
+                        username:regUsername,
+                        password:regPassword
+                    }).then((res)=>{
+                        console.log(res);
+                        if(res.data.auth){
+                            localStorage.setItem("token", res.data.token)
+                            // history.push('/home');
+                            console.log(res);
+                            return res;
+                        }
+                    });
+        
+                })
+            });
+            break;
+        case'ADMIN':
+            Axios.post("http://localhost:5000/register", {
+                id:userId,
+                username: regUsername,
+                password: regPassword,
+                email: regEmail,
+                type: 1
+            }).then((res)=>{
+                console.log("success")
+                return Axios.post("http://localhost:5000/registerRole", {
+                    id:userId,
+                    type: 1
+                }).then((res)=>{
+                    return  Axios.post("http://localhost:5000/login", {
+                        username:regUsername,
+                        password:regPassword
+                    }).then((res)=>{
+                        console.log(res);
+                        if(res.data.auth){
+                            localStorage.setItem("token", res.data.token)
+                            // history.push('/home');
+                            console.log(res);
+                            return res;
+                        }
+                    });
+        
+                })
+            });
+            break;
+        default:
+            console.log('no user to register')
+    }
+   
 }

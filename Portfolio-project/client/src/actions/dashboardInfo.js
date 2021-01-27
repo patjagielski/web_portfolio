@@ -16,32 +16,25 @@ export const startAddDashboard = (firstName, lastName, userWork, userEducation, 
     return (dispatch, getState) => {
         const uid = getState().auth.uid;
         const newFomr = new FormData()
-        console.log(typeof userCV)
+        console.log( firstName)
         newFomr.append("CV", userCV, userCV.name);
         newFomr.append( "id", uid);
-        newFomr.append( firstName);
-        newFomr.append( lastName);
-        newFomr.append( userWork);
-        newFomr.append( userEducation);
-        newFomr.append( userBio);
-        Axios.post("http://localhost:5000/postmyCVdaddy", newFomr).then((res)=>console.log(res))
-        //  Axios.post("http://localhost:5000/addDashboard", {
-        //     id: uid,
-        //     firstName,
-        //     lastName,
-        //     userWork, 
-        //     userEducation,
-        //     userBio
-            
-        // }).then((res)=>{
-        //     Axios.post("http://localhost:5000/addContact", {
-        //     id: uid,
-        //     instagramLink,
-        //     linkedInLink,
-        //     facebookLink,
-        //     githublink
-        // })
-        // })
+        newFomr.append("firstName", firstName);
+        newFomr.append( "lastName",lastName);
+        newFomr.append( "userWork",userWork);
+        newFomr.append( "userEducation",userEducation);
+        newFomr.append( "userBio",userBio);
+        Axios.post("http://localhost:5000/addNewUserInfo", newFomr).then((res)=>{
+            Axios.post("http://localhost:5000/addContact", {
+            id: uid,
+            instagramLink,
+            linkedInLink,
+            facebookLink,
+            githublink
+        })
+        }).then(()=>{
+            console.log("successfully added");
+        })
 
     };
 };
@@ -50,7 +43,6 @@ export const startEditDashboard = (firstName, lastName, userWork, userEducation,
     return(dispatch, getState) => {
         const uid = getState().auth.uid;
         const newFomr = new FormData()
-        console.log(firstName, "|", lastName)
         newFomr.append("CV", userCV, userCV.name);
         newFomr.append( "id", uid);
         newFomr.append("firstName", firstName);
@@ -58,7 +50,6 @@ export const startEditDashboard = (firstName, lastName, userWork, userEducation,
         newFomr.append( "userWork",userWork);
         newFomr.append( "userEducation",userEducation);
         newFomr.append( "userBio",userBio);
-        // Axios.post("http://localhost:5000/postmyCVdaddy", newFomr).then((res)=>console.log(res))
         Axios.post("http://localhost:5000/editDashboard", newFomr).then((res)=>{
             Axios.post("http://localhost:5000/editContact", {
             id:uid, 
@@ -78,13 +69,12 @@ export const startEditDashboard = (firstName, lastName, userWork, userEducation,
 export const startSetDashboard = () =>{
     return(dispatch, getState) =>{
         const uid = getState().auth.uid;
-        const result = Axios.post("http://localhost:5000/getUser", {
+        const result =  Axios.post("http://localhost:5000/getUser", {
         id: uid,
-        }).then( (res)=>{
+        }).then((res)=>{
             if(res.data.length === 1){
                 dispatch(setDashboard(res.data[0]));
-                console.log(res.data);
-                return res.data[0];
+                return res.data;
             }else{
                 console.log("errror");
                 console.log(res);
@@ -114,13 +104,12 @@ export const setDashboardCV = (uid) =>{
 export const startSetContactMePage = () => {
     return(dispatch, getState)=>{
         const uid = getState().auth.uid;
-        const result = Axios.post("http://localhost:5000/getContactInfo", {
+        return Axios.post("http://localhost:5000/getContactInfo", {
             id:uid,
         }).then(async(res)=>{
             console.log(res)
             return res;
         });
-        return result;
     }
 }
 

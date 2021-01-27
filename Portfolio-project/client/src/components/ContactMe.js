@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {startSetContactMePage} from '../actions/dashboardInfo';
+import { history } from '../routers/AppRouter';
 
 const ContactMe = ({startSetContactMePage}) => {
 
@@ -14,11 +15,11 @@ const ContactMe = ({startSetContactMePage}) => {
         async function fetchData(){
             const result = await startSetContactMePage();
             console.log(result);
-            setEmail(result.data[0].email);
-            setInstagramLink(result.data[0].instagramLink)
-            setFacebookLink(result.data[0].FacebookLink)
-            setLinkedInLink(result.data[0].LinkedInLink)
-            setGithubLink(result.data[0].GithubLink)
+            setEmail(result === undefined ? result.data[0].email : "");
+            setInstagramLink(result === undefined  ? result.data[0].instagramLink : "")
+            setFacebookLink(result === undefined  ? result.data[0].FacebookLink : "")
+            setLinkedInLink(result === undefined  ? result.data[0].LinkedInLink : "")
+            setGithubLink(result === undefined  ? result.data[0].GithubLink : "")
         }
         fetchData();
     }, []);
