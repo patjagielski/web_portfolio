@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { startEditDashboard } from "../actions/dashboardInfo";
 import { history } from "../routers/AppRouter";
 
-function EditDashboard({startEditDashboard}){
+function EditDashboard({startEditDashboard,getLiterals,getLang}){
 
    
     const handleSubmit = (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) =>{
@@ -18,7 +18,7 @@ function EditDashboard({startEditDashboard}){
     return(
         <div>
         <div>
-            <h1> Edit Your Job Here! </h1>
+            <h1>  {getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))} </h1>
         </div>
         <div>
             <DashbaordForm 
@@ -34,5 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
     startEditDashboard: (firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink) => dispatch(startEditDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink))
 });
 
-
-export default connect(undefined, mapDispatchToProps)(EditDashboard);
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(EditDashboard);

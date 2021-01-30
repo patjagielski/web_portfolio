@@ -1,18 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import AppRouter, {history} from './routers/AppRouter';
+import AppRouter  from './routers/AppRouter';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import {userAuthentication, login} from './actions/auth';
+import {loadLiterals} from './redux/literals';
+import loadLang from './i18n/index';
 
 const store = configureStore();
-
-
-/**
- * UNCOMMENT ONCE ALL OTHER PAGES ARE SET UP
- */
+const lang = loadLang();
+store.dispatch(loadLiterals(lang));
 
  
 //If jwt token is valid --> move to dashboard page

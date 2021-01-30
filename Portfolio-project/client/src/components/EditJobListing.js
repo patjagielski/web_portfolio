@@ -4,7 +4,7 @@ import JobListingForm from './JobListingForm';
 import { history } from "../routers/AppRouter";
 import { editJobPosting } from '../actions/recruiter';
 
-const EditJobListing = ({editJobPosting}) => {
+const EditJobListing = ({editJobPosting,getLang, getLiterals}) => {
     const handleSubmit = async(jobTitle, techRequirements, levelOfExpertise, jobDescription) =>{
         //create axios post 
         await editJobPosting(jobTitle, techRequirements, levelOfExpertise, jobDescription)
@@ -15,7 +15,7 @@ const EditJobListing = ({editJobPosting}) => {
     return(
         <div>
         <div>
-            <h1> Create a new Dashboard </h1>
+            <h1>  {getLang === "en" ? (getLiterals.en.edit_job):( getLang === "pl" ? (getLiterals.pl.edit_job):(getLiterals.ru.edit_job))} </h1>
         </div>
         <div>
             <JobListingForm 
@@ -30,4 +30,8 @@ const EditJobListing = ({editJobPosting}) => {
 const mapDispatchToProps = (dispatch)=>({
     editJobPosting: (jobTitle, techRequirements, levelOfExpertise, jobDescription) => dispatch(editJobPosting(jobTitle, techRequirements, levelOfExpertise, jobDescription))
 })
-export default connect(undefined, mapDispatchToProps)(EditJobListing);
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(EditJobListing);

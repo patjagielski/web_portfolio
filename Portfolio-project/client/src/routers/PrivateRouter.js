@@ -29,7 +29,6 @@ export const PrivateRoute = ({checkRole, isAuthenticated, component: Component, 
 const mapStateToProps = (state) => ({
     isAuthenticated: !!state.auth.loggedIn,
     checkRole: state.auth.roleName
-
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

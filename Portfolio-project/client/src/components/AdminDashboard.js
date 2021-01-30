@@ -8,7 +8,7 @@ import {RecruiterUsers} from './RecruiterUsers';
 import {startRemoveUser} from '../actions/admin';
 import { history } from '../routers/AppRouter';
 
-function AdminDashboard({getAllUsers, startRemoveUser}){
+function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
     
     const [baseState, setBaseState] = useState("");
 
@@ -28,11 +28,11 @@ function AdminDashboard({getAllUsers, startRemoveUser}){
     return(
         <div>
         <div>
-            <h1>FREELANCERS</h1>
+            <h1>{getLang === "en" ? (getLiterals.en.A_freelancers):( getLang === "pl" ? (getLiterals.pl.A_freelancers):(getLiterals.ru.A_freelancers))}</h1>
             {
                 baseState.length === 0 ? (
                     <div>
-                        <h1>NO USERS</h1>
+                        <h1>{getLang === "en" ? (getLiterals.en.no_users):( getLang === "pl" ? (getLiterals.pl.no_users):(getLiterals.ru.no_users))}</h1>
                     </div>
                 ) : (
                     baseState.map((values, index)=>{
@@ -44,11 +44,11 @@ function AdminDashboard({getAllUsers, startRemoveUser}){
             }
         </div>
         <div>
-            <h1>ADMINS</h1>
+            <h1>{getLang === "en" ? (getLiterals.en.A_admin):( getLang === "pl" ? (getLiterals.pl.A_admin):(getLiterals.ru.A_admin))}</h1>
             {
                 baseState.length === 0 ? (
                     <div>
-                        <h1>NO USERS</h1>
+                        <h1>{getLang === "en" ? (getLiterals.en.no_users):( getLang === "pl" ? (getLiterals.pl.no_users):(getLiterals.ru.no_users))}</h1>
                     </div>
                 ) : (
                     baseState.map((values, index)=>{
@@ -60,11 +60,11 @@ function AdminDashboard({getAllUsers, startRemoveUser}){
             }
         </div>
         <div>
-            <h1>RECRUITERS</h1>
+            <h1>{getLang === "en" ? (getLiterals.en.A_recruiters):( getLang === "pl" ? (getLiterals.pl.A_recruiters):(getLiterals.ru.A_recruiters))}</h1>
             {
                 baseState.length === 0 ? (
                     <div>
-                        <h1>NO USERS</h1>
+                        <h1>{getLang === "en" ? (getLiterals.en.no_users):( getLang === "pl" ? (getLiterals.pl.no_users):(getLiterals.ru.no_users))}</h1>
                     </div>
                 ) : (
                     baseState.map((values,index)=>{
@@ -83,5 +83,9 @@ const mapDispatchToProps = (dispatch)=>({
     getAllUsers: () => dispatch(getAllUsers()),
     startRemoveUser: (uid) => dispatch(startRemoveUser(uid))
 });
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
 
-export default connect(undefined, mapDispatchToProps)(AdminDashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard)

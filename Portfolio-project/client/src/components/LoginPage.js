@@ -5,18 +5,23 @@ import Axios from "axios";
 import Dashboard from './FreeLancerDashboard';
 import {startLogin,login,registerUser} from '../actions/auth';
 import uuid from 'react-uuid'
+import { setLang } from '../actions/lang';
 
 
 
 
-function LoginPage({finishLogin}){
+function LoginPage({finishLogin, getLiterals, setStoreLang, getLang}){
 
     const [regEmail, setRegEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [type, setType] = useState("");
-    const [userId, setUserId] = useState("");
+    const [lang, setLang] = useState("en");
  
+    useEffect(()=>{
+        setStoreLang(lang);
+        console.log(getLang)
+    },[lang])
 
     const handleRegister = async() =>{
         const id = uuid()
@@ -37,8 +42,21 @@ function LoginPage({finishLogin}){
    
 
     return(
-        
         <div>
+        <div>
+        <button onClick={(e)=>{
+            setLang("en");
+        }}>English</button>
+        <button onClick={(e)=>{
+            setLang("pl");
+        }}>Polish</button>
+        <button onClick={(e)=>{
+            setLang("ru");
+        }}>Russian</button>
+        </div>
+
+        <div>
+            {getLang === "en" ? (getLiterals.en.app_login):( lang === "pl" ? (getLiterals.pl.app_login):(getLiterals.ru.app_login))}
         <div className="login">
             <input type="text" placeholder="username"
                 onChange={(e)=>{
@@ -86,6 +104,7 @@ function LoginPage({finishLogin}){
         </div>
 
         </div>
+        </div>
         
     )
 
@@ -94,7 +113,11 @@ function LoginPage({finishLogin}){
 const mapDispatchToProps = (dispatch) => ({
     startLogin: (username, password) => dispatch(startLogin(username, password)),
     finishLogin: (uid, roleName) => dispatch(login(uid, roleName)),
-    registerUser: (userId,username, password, regEmail, type) => dispatch(registerUser(userId,username, password, regEmail, type))
+    registerUser: (userId,username, password, regEmail, type) => dispatch(registerUser(userId,username, password, regEmail, type)),
+    setStoreLang : (lang)=>dispatch(setLang(lang))
 });
-
-export default connect(undefined, mapDispatchToProps)(LoginPage);
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

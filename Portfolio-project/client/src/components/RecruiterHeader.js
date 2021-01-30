@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {logout} from '../actions/auth';
+import {setLang} from '../actions/lang'
 
 
-
-const RecruiterHeader = ({logout}) => (
+const RecruiterHeader = ({logout,getLang, setStoreLang}) => {
+    const [lang, setLang] = useState("en");
+    
+    useEffect(()=>{
+        setStoreLang(lang);
+        console.log(getLang)
+    },[lang])
+    return(
     <header>
+    <div>
+        <button onClick={(e)=>{
+            setLang("en");
+        }}>English</button>
+        <button onClick={(e)=>{
+            setLang("pl");
+        }}>Polish</button>
+        <button onClick={(e)=>{
+            setLang("ru");
+        }}>Russian</button>
+        </div>
         <div>
             <NavLink to='/CreateJobListing' activeClassName='is-active' exact={true}>Create Job Listing</NavLink>
             <br />
@@ -17,9 +35,13 @@ const RecruiterHeader = ({logout}) => (
         </div>
     </header>
 );
+}
 
 const mapDispatchToProps = (dispatch) => ({
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    setStoreLang : (lang)=>dispatch(setLang(lang))
 });
-
-export default connect(undefined, mapDispatchToProps)(RecruiterHeader);
+const mapStateToProps = (state)=>({
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(RecruiterHeader);

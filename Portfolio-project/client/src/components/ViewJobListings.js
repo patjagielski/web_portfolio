@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import {getJobs} from '../actions/dashboardInfo';
 import {getJobCount} from '../actions/dashboardInfo';
-import { ViewJobItem } from './ViewJobItem';
+import  ViewJobItem  from './ViewJobItem';
 
 
-const ViewJobListings = ({getJobs, getJobCount}) =>{
+const ViewJobListings = ({getJobs, getJobCount, getLiterals, getLang}) =>{
     
 
     const [baseState, setBaseState] = useState("");
@@ -37,16 +37,16 @@ const ViewJobListings = ({getJobs, getJobCount}) =>{
 return(
 
     <div>
-        <h1>View Jobs here</h1>
+        <h1>{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</h1>
         <br/>
         {
             baseState.length === 0 ? (
                 <div>
-                    <p> Sorry no new jobs</p>
+                    <p>{getLang === "en" ? (getLiterals.en.no_jobs):( getLang === "pl" ? (getLiterals.pl.no_jobs):(getLiterals.ru.no_jobs))}</p>
                 </div>
             ):(
                 baseState.map((val)=>{
-                return <ViewJobItem key={val.jobId} {...val} />
+                return <div><ViewJobItem key={val.jobId} {...val} /></div>
             })
             )
         }
@@ -69,6 +69,10 @@ const mapDispatchToProps = (dispatch) => ({
     getJobs:(pageNumber) => dispatch(getJobs(pageNumber)),
     getJobCount:() =>dispatch(getJobCount())
 })
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
 
-export default connect(undefined, mapDispatchToProps)(ViewJobListings)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewJobListings)
 

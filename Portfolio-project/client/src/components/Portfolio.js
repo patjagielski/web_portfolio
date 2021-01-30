@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-function Portfolio({getUid}){
+function Portfolio({getUid, getLang, getLiterals}){
 
     // const [userCV, setUserCV] = useState('');
     
 
     return(
     <div>
-        <h1> This here is my Portfolio </h1>
+        <h1> {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))}  </h1>
         <Document
         file= {{url:`http://localhost:5000/startGetCV?id=${getUid}`}}
         onLoadSuccess={(()=>{
@@ -25,7 +25,9 @@ function Portfolio({getUid}){
 };
 
 const mapStateToProps = (state) => ({
-    getUid: state.auth.uid
+    getUid: state.auth.uid,
+    getLiterals: state.literals,
+    getLang: state.lang.lang
 });
 
 export default connect(mapStateToProps)(Portfolio);

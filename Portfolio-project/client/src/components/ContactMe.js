@@ -1,15 +1,20 @@
 import React, { useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {startSetContactMePage} from '../actions/dashboardInfo';
-import { history } from '../routers/AppRouter';
+import {setLang} from '../actions/lang'
 
-const ContactMe = ({startSetContactMePage}) => {
+const ContactMe = ({startSetContactMePage, getLiterals, getLang, setStoreLang}) => {
 
     const [instagramLink, setInstagramLink] = useState("");
     const [facebookLink, setFacebookLink] = useState("");
     const [linkedInLink, setLinkedInLink] = useState("");
     const [githubLink, setGithubLink] = useState("");
     const [email, setEmail] = useState("");
+    const [lang, setLang] = useState("en");
+
+    useEffect(()=>{
+        setStoreLang(lang);
+    },[lang])
 
     useEffect(()=>{
         async function fetchData(){
@@ -24,8 +29,8 @@ const ContactMe = ({startSetContactMePage}) => {
         fetchData();
     }, []);
     return (<div>
-        <h1> Here is my Contact Info </h1>
-        <p>Email: {email}</p>
+        <h1> {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))} </h1>
+        <p>{getLang === "en" ? (getLiterals.en.FL_email):( getLang === "pl" ? (getLiterals.pl.FL_email):(getLiterals.ru.FL_email))}: {email}</p>
         <div>
         {!!linkedInLink &&
             <a href={linkedInLink}>
@@ -49,7 +54,11 @@ const ContactMe = ({startSetContactMePage}) => {
     )
 };
 const mapDispatchToProps = (dispatch) => ({
-    startSetContactMePage: ()=>dispatch(startSetContactMePage())
+    startSetContactMePage: ()=>dispatch(startSetContactMePage()),
+    setStoreLang : (lang)=>dispatch(setLang(lang))
 });
-
-export default connect(undefined, mapDispatchToProps)(ContactMe);
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(ContactMe);

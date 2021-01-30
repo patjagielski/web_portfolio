@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 
-function JobListingForm({customSubmit, job}){
+function JobListingForm({customSubmit, job,getLiterals, getLang}){
 
     const [jobTitle, setJobTitle] = useState(job ? job[0].job.jobTitle : "")
     const [techRequirements, setTechRequirements] = useState(job ? job[0].job.techRequirements : "")
@@ -43,7 +43,7 @@ function JobListingForm({customSubmit, job}){
                 }}
             />  
             <div>
-                <button>Submit</button>
+                <button>{getLang === "en" ? (getLiterals.en.submit):( getLang === "pl" ? (getLiterals.pl.submit):(getLiterals.ru.submit))}</button>
             </div>
         </form>
     )
@@ -51,7 +51,9 @@ function JobListingForm({customSubmit, job}){
 }
 
 const mapStateToProps = (state)=>({
-    job: state.rec.job
+    job: state.rec.job,
+    getLiterals: state.literals,
+    getLang: state.lang.lang
 })
 
 export default connect(mapStateToProps)(JobListingForm);

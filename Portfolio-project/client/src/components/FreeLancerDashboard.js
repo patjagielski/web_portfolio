@@ -6,7 +6,7 @@ import { startSetDashboard } from '../actions/dashboardInfo';
 import ContactMe from './ContactMe'
 
 
-function FreeLancerDashboard({startSetDashboard}){
+function FreeLancerDashboard({startSetDashboard,getLiterals, getLang}){
     
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -14,7 +14,7 @@ function FreeLancerDashboard({startSetDashboard}){
     const [userEducation, setUserEducation] = useState("");
     const [userBio, setUserBio] = useState("");
     
-    
+
     useEffect(()=> {
         async function fetchData() {
             const result = await startSetDashboard();
@@ -26,7 +26,6 @@ function FreeLancerDashboard({startSetDashboard}){
                 setUserEducation(result[0].userEducation);
                 setUserBio(result[0].userBio);
             }
-            
         }
         fetchData();
         }, []);
@@ -35,23 +34,23 @@ function FreeLancerDashboard({startSetDashboard}){
         <div>
         <br/>
             <div>
-                <Link to="/EditDashboard">Edit Info</Link>
+                <Link to="/EditDashboard">{getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))}</Link>
             </div>
             <div>
-                <h1> Welcome to {firstName} {lastName}'s Portfolio </h1>
+                <h1> {getLang === "en" ? (getLiterals.en.FL_welcome_start):( getLang === "pl" ? (getLiterals.pl.FL_welcome_start):(getLiterals.ru.FL_welcome_start))} {firstName} {lastName}{getLang === "en" ? (getLiterals.en.FL_welcome_end):( getLang === "pl" ? (getLiterals.pl.FL_welcome_end):(getLiterals.ru.FL_welcome_end))}</h1>
                 <p> {userBio}</p>
-                {firstName === "" ? (<div>Looks like you're missing some info click here to add your dashboard<Link to="/AddDashboard">Add Info</Link></div>): ("")}
+                {firstName === "" ? (<div> {getLang === "en" ? (getLiterals.en.FL_missing):( getLang === "pl" ? (getLiterals.pl.FL_missing_info):(getLiterals.ru.FL_missing_info))}<Link to="/AddDashboard">Add Info</Link></div>): ("")}
                 <div>
-                    <h2>Bio/about me</h2>
+                    <h2>{getLang === "en" ? (getLiterals.en.FL_bio):( getLang === "pl" ? (getLiterals.pl.FL_bio):(getLiterals.ru.FL_bio))}</h2>
                 </div>
                 ---------------------------------
                 <div>
-                    <h2>Experience</h2>
+                    <h2>{getLang === "en" ? (getLiterals.en.FL_work):( getLang === "pl" ? (getLiterals.pl.FL_work):(getLiterals.ru.FL_work))}</h2>
                     <h4>{userWork}</h4>
                 </div>
                 ---------------------------------
                 <div>
-                    <h2>Education</h2>
+                    <h2>{getLang === "en" ? (getLiterals.en.FL_education):( getLang === "pl" ? (getLiterals.pl.FL_education):(getLiterals.ru.FL_education))}</h2>
                     <h4>{userEducation}</h4>
                 </div>
                 ---------------------------------
@@ -64,7 +63,11 @@ function FreeLancerDashboard({startSetDashboard}){
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startSetDashboard: () => dispatch(startSetDashboard())
+    startSetDashboard: () => dispatch(startSetDashboard()),
+    setStoreLang : (lang)=>dispatch(setLang(lang))
 });
-
-export default connect(undefined, mapDispatchToProps)(FreeLancerDashboard);
+const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+})
+export default connect(mapStateToProps, mapDispatchToProps)(FreeLancerDashboard);

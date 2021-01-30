@@ -1,11 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 
-const NotFoundPage = () => (
+const NotFoundPage = ({getLang, getLiterals}) => (
     <div>
-        404 ~ Return to the homepage ~ <Link to="/">Home</Link>
+    {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))}<Link to="/">Home</Link>
     </div>
 );
 
-export default NotFoundPage;
+
+const mapStateToProps = (state) => ({
+    getLiterals: state.literals,
+    getLang: state.lang.lang
+});
+
+export default connect(mapStateToProps)(NotFoundPage);
