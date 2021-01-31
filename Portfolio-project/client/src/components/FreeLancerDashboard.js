@@ -18,7 +18,7 @@ function FreeLancerDashboard({startSetDashboard,getLiterals, getLang}){
     useEffect(()=> {
         async function fetchData() {
             const result = await startSetDashboard();
-            console.log(result);
+            console.log(getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard)));
             if(result){
                 setFirstName(result[0].firstName);
                 setLastName(result[0].lastName);

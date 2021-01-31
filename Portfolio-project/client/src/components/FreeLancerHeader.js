@@ -6,12 +6,16 @@ import {setLang} from '../actions/lang'
 
 
 const FreeLancerHeader = ({logout,setStoreLang, getLang}) => {
-    const [lang, setLang] = useState("en");
+    const [lang, setLang] = useState(getLang);
     
     useEffect(()=>{
         setStoreLang(lang);
         console.log(getLang)
     },[lang])
+    // useEffect(()=>{
+    //     const lan = getLang;
+    //     setLang(lan);
+    // },[])
 
     return(  
       <header>

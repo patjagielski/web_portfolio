@@ -20,7 +20,6 @@ function LoginPage({finishLogin, getLiterals, setStoreLang, getLang}){
  
     useEffect(()=>{
         setStoreLang(lang);
-        console.log(getLang)
     },[lang])
 
     const handleRegister = async() =>{
@@ -41,54 +40,63 @@ function LoginPage({finishLogin, getLiterals, setStoreLang, getLang}){
     };
    
 
-    return(
-        <div>
-        <div>
-        <button onClick={(e)=>{
+    return( 
+        <div className="box-layout">
+        <div class="container">
+
+        <div class="d-flex flex-row-reverse bd-highlight">
+        <button class="en" onClick={(e)=>{
             setLang("en");
-        }}>English</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button class="pl"  onClick={(e)=>{
             setLang("pl");
-        }}>Polish</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button class="ru" onClick={(e)=>{
             setLang("ru");
-        }}>Russian</button>
+        }}></button>
         </div>
+        <div class="d-flex justify-content-center">
+            <h1 class="display-1 text-info">{getLang === "en" ? (getLiterals.en.app_login):( lang === "pl" ? (getLiterals.pl.app_login):(getLiterals.ru.app_login))}</h1>
+        </div>
+        
 
-        <div>
-            {getLang === "en" ? (getLiterals.en.app_login):( lang === "pl" ? (getLiterals.pl.app_login):(getLiterals.ru.app_login))}
-        <div className="login">
-            <input type="text" placeholder="username"
+
+        <div className="d-flex justify-content-center">
+        <div className="box-layout__box" >
+        <h2 class="h1 text-muted">{getLang === "en" ? (getLiterals.en.login):( lang === "pl" ? (getLiterals.pl.login):(getLiterals.ru.login))}</h2>
+            <input class="text-input" type="text" placeholder="username"
                 onChange={(e)=>{
                     setUsername(e.target.value);
                 }}
             />
-            <input type="password" placeholder="password"
+            <input class="text-input" type="password" placeholder="password"
                 onChange={(e)=>{
                     setPassword(e.target.value);
             }}
             />
-            <button onClick={handleLogin}>Submit</button>
+            <button class="button-layout" onClick={handleLogin}>Submit</button>
         </div>
 
 
-        <div className="register">
-            <input type="text" placeholder="username" 
+        <div className="box-layout__box">
+        <h2 class="h1 text-muted">{getLang === "en" ? (getLiterals.en.register):( lang === "pl" ? (getLiterals.pl.register):(getLiterals.ru.register))}</h2>
+            <input class="text-input" type="text" placeholder="username" 
                 onChange={(e)=>{
                     setUsername(e.target.value);
             }}
             />
-            <input type="password" placeholder="password" 
+            <input class="text-input" type="password" placeholder="password" 
                 onChange={(e)=>{
                     setPassword(e.target.value);
                 }}
             />
-            <input types="text" placeholder="email"
+            <input class="text-input" types="text" placeholder="email"
                 onChange={(e)=>{
                     setRegEmail(e.target.value);
                 }}
             />
             <select
+                className="text-input"
                 onChange={(e)=>{
                     if(e.target.value != -1){
                         setType(e.target.value)
@@ -100,7 +108,8 @@ function LoginPage({finishLogin, getLiterals, setStoreLang, getLang}){
                 <option value="ADMIN">ADMIN</option>
                 <option value="RECRUITER">RECRUITER</option>
             </select>
-            <input type="button" value="register" onClick={(handleRegister)}/>
+            <input class="button-layout" type="button" value="Register" onClick={(handleRegister)}/>
+        </div>
         </div>
 
         </div>

@@ -1,5 +1,7 @@
 {
    "en": {
+            "login":"Login",
+            "register":"Register",
             "app_login": "Welcome to LinkedIn Light!",
             "FL_welcome_start":"Welcome to",
             "FL_welcome_end":"Dashboard",
@@ -31,6 +33,8 @@
             "create_job":"Create a new job listing!"
     },
     "pl": {
+            "login":"Zaloguj sie",
+            "register":"Zarejestrować",
             "app_login": "Witam do LinkedIn Light!!",
             "FL_welcome_start":"Witamy w",
             "FL_welcome_end":"Deska rozdzielcza",
@@ -62,6 +66,8 @@
             "create_job":"Utwórz nową ofertę pracy!"
     },
     "ru":{
+            "login":"авторизоваться",
+            "register":"регистр",
             "app_login":"Добро пожаловать в LinkedIn Light!",
             "FL_welcome_start":"Добро пожаловать в",
             "FL_welcome_end":"Панель приборов",

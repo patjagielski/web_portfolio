@@ -7,11 +7,10 @@ import {setLang} from '../actions/lang'
 
 
 const AdminHeader = ({logout, getLang, setStoreLang}) => {
-    const [lang, setLang] = useState("en");
+    const [lang, setLang] = useState(getLang);
     
     useEffect(()=>{
         setStoreLang(lang);
-        console.log(getLang)
     },[lang])
 
     return (

@@ -10,7 +10,7 @@ const ContactMe = ({startSetContactMePage, getLiterals, getLang, setStoreLang}) 
     const [linkedInLink, setLinkedInLink] = useState("");
     const [githubLink, setGithubLink] = useState("");
     const [email, setEmail] = useState("");
-    const [lang, setLang] = useState("en");
+    const [lang, setLang] = useState(getLang);
 
     useEffect(()=>{
         setStoreLang(lang);

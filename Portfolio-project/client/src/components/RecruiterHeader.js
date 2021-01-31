@@ -6,7 +6,7 @@ import {setLang} from '../actions/lang'
 
 
 const RecruiterHeader = ({logout,getLang, setStoreLang}) => {
-    const [lang, setLang] = useState("en");
+    const [lang, setLang] = useState(getLang);
     
     useEffect(()=>{
         setStoreLang(lang);
