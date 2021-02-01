@@ -9,8 +9,10 @@ function Portfolio({getUid, getLang, getLiterals}){
     
 
     return(
-    <div>
+    <div  className="content-container">
         <h1> {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))}  </h1>
+        <div className="content-container__portfolio">
+        
         <Document
         file= {{url:`http://localhost:5000/startGetCV?id=${getUid}`}}
         onLoadSuccess={(()=>{
@@ -19,8 +21,8 @@ function Portfolio({getUid, getLang, getLiterals}){
       >
         <Page pageNumber={1} />
       </Document>
-        
-    </div>
+      </div>
+        </div>
     );
 };
 

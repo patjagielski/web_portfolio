@@ -5,7 +5,7 @@ import {logout} from '../actions/auth';
 import {setLang} from '../actions/lang'
 
 
-const FreeLancerHeader = ({logout,setStoreLang, getLang}) => {
+const FreeLancerHeader = ({logout,setStoreLang, getLang, getLiterals}) => {
     const [lang, setLang] = useState(getLang);
     
     useEffect(()=>{
@@ -18,26 +18,29 @@ const FreeLancerHeader = ({logout,setStoreLang, getLang}) => {
     // },[])
 
     return(  
-      <header>
-      <div>
-        <button onClick={(e)=>{
+        <header className="header__content">
+        
+            <NavLink className="button-icon" to='/freelancer' activeClassName='is-active' exact={true}></NavLink>
+
+        <div className="container d-flex flex-row-reverse justify-content-between">
+        <div className="d-flex flex-row-reverse bd-highlight">
+        <button className="en" onClick={(e)=>{
             setLang("en");
-        }}>English</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="pl"  onClick={(e)=>{
             setLang("pl");
-        }}>Polish</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="ru" onClick={(e)=>{
             setLang("ru");
-        }}>Russian</button>
+        }}></button>
         </div>
         <div>
-            <NavLink to='/freelancer' activeClassName='is-active' exact={true}>Dashboard</NavLink>
-            <br />
-            <NavLink to='/portfolio' activeClassName='is-active' exact={true}>Portfolio</NavLink>
-            <br />
-            <NavLink to='/ViewJobListings' activeClassName='is-active' exact={true}>View Jobs</NavLink>
-            <br />
-            <button onClick={logout}>Logout</button>
+            <NavLink className="button-layout__freelancer" to='/portfolio' activeClassName='is-active' exact={true}>Portfolio</NavLink>
+            <NavLink className="button-layout__freelancer" to='/ViewJobListings' activeClassName='is-active' exact={true}>View Jobs</NavLink>
+            <NavLink className="button-layout__freelancer" to="/EditDashboard">{getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))}</NavLink>
+            <button className="button-layout__logout" onClick={logout}>Logout</button>
+        </div>
+        
         </div>
     </header>
 );
@@ -47,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     setStoreLang : (lang)=>dispatch(setLang(lang))
 });
 const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
     getLang: state.lang.lang
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FreeLancerHeader);

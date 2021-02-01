@@ -16,9 +16,9 @@ function EditDashboard({startEditDashboard,getLiterals,getLang}){
     }
 
     return(
+        <div className="content-container">
         <div>
-        <div>
-            <h1>  {getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))} </h1>
+            <h1 className="display-3">  {getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))} </h1>
         </div>
         <div>
             <DashbaordForm 

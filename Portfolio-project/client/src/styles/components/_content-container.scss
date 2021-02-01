@@ -1,0 +1,50 @@
+.content{
+    padding-top:20px;
+    display:flex;
+    justify-content: space-between;
+}
+.content-container{
+    margin: 0 auto;
+    padding: 0 $m-size;
+    max-width: 80rem;
+    text-align: center;
+}
+    
+.content-container__dashboard{
+    @extend .content-container;
+    padding: $m-size;
+    margin: $s-size;
+}
+
+.content-container__portfolio{
+    @extend .content-container;
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+}
+
+.content-container__job-item{
+    @extend .content-container;
+    justify-content: center;
+    display: flex;
+    margin:10px;
+    padding:25px;
+    background: whitesmoke;
+    color: black;
+}
+
+.content-container__job-list{
+    @extend .content-container;
+    display:flex;
+    justify-content: center;
+}
+
+.content-container__user-list{
+    @extend .content-container;
+    text-align:unset;
+    display:inline;
+}
+
+body{
+    background: rgb(255, 252, 229);
+}

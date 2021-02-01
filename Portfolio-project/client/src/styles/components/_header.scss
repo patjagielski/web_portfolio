@@ -1,0 +1,17 @@
+.header{
+    background: rgb(1, 90, 126);
+}
+
+.header__content{
+    background-color: rgb(62, 0, 87);
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.header__title{
+    color: white;
+    text-decoration: none;
+    h1{
+        margin: 0;
+    }
+}

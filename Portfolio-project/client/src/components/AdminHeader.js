@@ -14,21 +14,24 @@ const AdminHeader = ({logout, getLang, setStoreLang}) => {
     },[lang])
 
     return (
-    <header>
-    <div>
-        <button onClick={(e)=>{
+    <header className="header__content">
+        <button className="button-icon"  ></button>
+    <div className="container d-flex flex-row-reverse justify-content-between">
+    <div className="d-flex flex-row-reverse bd-highligh">
+        <button className="en" onClick={(e)=>{
             setLang("en");
-        }}>English</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="pl" onClick={(e)=>{
             setLang("pl");
-        }}>Polish</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="ru" onClick={(e)=>{
             setLang("ru");
-        }}>Russian</button>
+        }}></button>
         </div>
         <div>
-            <button onClick={(logout)}>Logout</button>
+            <button className="button-layout__logout" onClick={(logout)}>Logout</button>
         </div>
+    </div>
     </header>
 );
     }

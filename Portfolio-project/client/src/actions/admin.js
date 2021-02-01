@@ -15,9 +15,7 @@ export const startRemoveUser = (uid) => {
         Axios.post("http://localhost:5000/removeUser", {
             id:uid
         }).then((res)=>{
-            
             dispatch(removeUser(uid))
-            console.log(getState());
             
         })
     }
@@ -28,7 +26,6 @@ export const getAllUsers = () =>{
         return Axios.get("http://localhost:5000/getAllusers").then((res)=>{
             
             dispatch(setAllUsers(res.data));
-            console.log(getState());
             return res.data;
         })
     }

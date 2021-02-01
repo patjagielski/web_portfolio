@@ -3,53 +3,39 @@ import {connect} from 'react-redux';
 import {startSetContactMePage} from '../actions/dashboardInfo';
 import {setLang} from '../actions/lang'
 
-const ContactMe = ({startSetContactMePage, getLiterals, getLang, setStoreLang}) => {
+const ContactMe = ({instagramLink,LinkedInLink,FacebookLink, GithubLink,email,getLiterals, getLang, setStoreLang}) => {
 
-    const [instagramLink, setInstagramLink] = useState("");
-    const [facebookLink, setFacebookLink] = useState("");
-    const [linkedInLink, setLinkedInLink] = useState("");
-    const [githubLink, setGithubLink] = useState("");
-    const [email, setEmail] = useState("");
     const [lang, setLang] = useState(getLang);
 
     useEffect(()=>{
         setStoreLang(lang);
     },[lang])
 
-    useEffect(()=>{
-        async function fetchData(){
-            const result = await startSetContactMePage();
-            console.log(result);
-            setEmail(result === undefined ? result.data[0].email : "");
-            setInstagramLink(result === undefined  ? result.data[0].instagramLink : "")
-            setFacebookLink(result === undefined  ? result.data[0].FacebookLink : "")
-            setLinkedInLink(result === undefined  ? result.data[0].LinkedInLink : "")
-            setGithubLink(result === undefined  ? result.data[0].GithubLink : "")
-        }
-        fetchData();
-    }, []);
-    return (<div>
-        <h1> {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))} </h1>
-        <p>{getLang === "en" ? (getLiterals.en.FL_email):( getLang === "pl" ? (getLiterals.pl.FL_email):(getLiterals.ru.FL_email))}: {email}</p>
+
+    return (
         <div>
-        {!!linkedInLink &&
-            <a href={linkedInLink}>
+        <h1 className="display-5"> {getLang === "en" ? (getLiterals.en.FL_contact_me):( getLang === "pl" ? (getLiterals.pl.FL_contact_me):(getLiterals.ru.FL_contact_me))} </h1>
+        <p className="display-6">{getLang === "en" ? (getLiterals.en.FL_email):( getLang === "pl" ? (getLiterals.pl.FL_email):(getLiterals.ru.FL_email))}: {email}</p>
+        <div className="content">
+        {!!LinkedInLink &&    
+            <a href={LinkedInLink}>
             <img src="/images/linkedin.png" height="100" width="100"/>
             </a>}
-        {!!facebookLink &&  
-            <a href={facebookLink}>
+        {!!FacebookLink &&  
+            <a href={FacebookLink}>
             <img src="/images/facebook-circular-logo.png" height="100" width="100"/>
             </a>}
         {!!instagramLink &&  
             <a href={instagramLink}>
-            <img src="/images/instagram.png" height="100" width="100"/>
+            <img  src="/images/instagram.png" height="100" width="100"/>
             </a>}
-        {!!githubLink &&  
-            <a href={githubLink}>
-            <img src="/images/github.png" height="100" width="100"/>
+        {!!GithubLink &&  
+            <a href={GithubLink}>
+            <img  src="/images/github.png" height="100" width="100"/>
             </a>}
-
         </div>
+
+
     </div>
     )
 };

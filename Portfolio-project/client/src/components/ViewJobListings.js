@@ -35,10 +35,8 @@ const ViewJobListings = ({getJobs, getJobCount, getLiterals, getLang}) =>{
     }, [currentPage]);
 
 return(
-
-    <div>
-        <h1>{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</h1>
-        <br/>
+    <div className="content-container">
+        <h1 className="display-3">{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</h1>
         {
             baseState.length === 0 ? (
                 <div>
@@ -50,18 +48,22 @@ return(
             })
             )
         }
-        <button onClick={((e)=>{
+        <div className="content-container__job-list">
+        <ul className="pagination">
+        <button className="page-item" onClick={((e)=>{
             e.preventDefault();
             let currPage = currentPage-1;
             setCurrentPage(Math.max(1,currPage))
-        })}>{"<--"}</button>
-        <button onClick={((e)=>{
+        })}><span aria-hidden="true">&laquo;</span></button>
+        <button className="page-item" onClick={((e)=>{
             e.preventDefault();
             let currPage = currentPage+1;
             setCurrentPage(Math.min(currPage,maxPages-1))
-        })}>{"-->"}</button>
-        
+        })}> <span aria-hidden="true">&raquo;</span></button>
+        </ul>
+        </div>
     </div>
+    
             )
 }
 

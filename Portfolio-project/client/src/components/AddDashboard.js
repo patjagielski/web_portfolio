@@ -14,7 +14,7 @@ function AddDashboard({startAddDashboard, getLang, getLiterals}){
     }
 
     return(
-        <div>
+        <div className="content-container">
         <div>
             <h1> {getLang === "en" ? (getLiterals.en.new_dashboard):( lang === "pl" ? (getLiterals.pl.new_dashboard):(getLiterals.ru.new_dashboard))} </h1>
         </div>

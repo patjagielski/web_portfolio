@@ -26,9 +26,22 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
     }
 
     return(
+        <div className="container">
         <div>
-        <div>
-            <h1>{getLang === "en" ? (getLiterals.en.A_freelancers):( getLang === "pl" ? (getLiterals.pl.A_freelancers):(getLiterals.ru.A_freelancers))}</h1>
+        <div className="content-container">
+            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_freelancers):( getLang === "pl" ? (getLiterals.pl.A_freelancers):(getLiterals.ru.A_freelancers))}</h1>
+        </div>
+            <table className="table">
+            <thead>
+                <tr>
+                    <th className="custom-card-title" scope="col">First Name</th>
+                    <th className="custom-card-title" scope="col">Last Name</th>
+                    <th className="custom-card-title" scope="col">Email</th>
+                    <th className="custom-card-title" scope="col">Role</th>
+                </tr>
+            </thead>
+            </table>
+            
             {
                 baseState.length === 0 ? (
                     <div>
@@ -37,14 +50,20 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
                 ) : (
                     baseState.map((values, index)=>{
                         if(values.roleName === "FREELANCER"){
-                            return <div><FreelanceUsers key={values.userId} {...values} /> <button onClick={((e)=>{handleOnClick(values.userId)})}>X</button> </div>
+                            return <div className="content-container__job-list">
+                            
+                                <FreelanceUsers key={values.userId} {...values} /> <button className="button-layout__remove" onClick={((e)=>{handleOnClick(values.userId)})}>X</button> 
+                            
+                            </div>
                         }
                     })
                 )
             }
+            
+            
         </div>
         <div>
-            <h1>{getLang === "en" ? (getLiterals.en.A_admin):( getLang === "pl" ? (getLiterals.pl.A_admin):(getLiterals.ru.A_admin))}</h1>
+            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_admin):( getLang === "pl" ? (getLiterals.pl.A_admin):(getLiterals.ru.A_admin))}</h1>
             {
                 baseState.length === 0 ? (
                     <div>
@@ -60,7 +79,7 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
             }
         </div>
         <div>
-            <h1>{getLang === "en" ? (getLiterals.en.A_recruiters):( getLang === "pl" ? (getLiterals.pl.A_recruiters):(getLiterals.ru.A_recruiters))}</h1>
+            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_recruiters):( getLang === "pl" ? (getLiterals.pl.A_recruiters):(getLiterals.ru.A_recruiters))}</h1>
             {
                 baseState.length === 0 ? (
                     <div>

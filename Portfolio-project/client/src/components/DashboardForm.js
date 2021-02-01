@@ -38,50 +38,51 @@ function DashbaordForm({dashboardState, customSubmit}){
 
     return(
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="First Name" 
+            <input class="text-input" type="text" placeholder="First Name" 
                 onChange={(e)=>{setFirstName(onFirstNameChange(e))}}
             />
-            <input type="text" placeholder="Last Name"
+            <input class="text-input" type="text" placeholder="Last Name"
                 onChange={(e)=>{setLastName(onLastNameChange(e))}}
             />
-            <input type="text" placeholder="Work Experience"
+            <input class="text-input" type="text" placeholder="Work Experience"
                 onChange={(e)=>{
                     e.preventDefault();
                     setUserWork(e.target.value);
                 }}
             />
-            <input type="text" placeholder="Education"
+            <input class="text-input" type="text" placeholder="Education"
                 onChange={(e)=>{
                     e.preventDefault();
                     setUserEducation(e.target.value);
                 }}
             />
-            <textarea onChange = {(e)=>{setUserBio(e.target.value)}} placeholder="Input a Bio here"/>  
+            <textarea class="text-area" onChange = {(e)=>{setUserBio(e.target.value)}} placeholder="Input a Bio here"/>  
 
-            <input type="file" placeholder="CV?" 
+            <input class="text-input" type="file" placeholder="CV?" 
                 onChange={(e)=>{
                     e.preventDefault();
                     setUserCV(e.target.files[0]);
                 }}
             />
-            <h3>Social Media Info</h3>
+            
+            <h3 className="display-3">Social Media Info</h3>
 
-            <input type="text" placeholder="Instagram Link"
+            <input class="text-input" type="text" placeholder="Instagram Link"
                 onChange={(e)=>{
                     e.preventDefault();
                     setInstagramLink(e.target.value);
                 }}/>
-            <input type="text" placeholder="Facebook Link"
+            <input class="text-input" type="text" placeholder="Facebook Link"
                 onChange={(e)=>{
                     e.preventDefault();
                     setFacebookLink(e.target.value);
                 }}/>
-            <input type="text" placeholder="LinkedIn Link"
+            <input class="text-input" type="text" placeholder="LinkedIn Link"
                 onChange={(e)=>{
                     e.preventDefault();
                     setLinkedInLink(e.target.value);
                 }}/>
-            <input type="text" placeholder="Github Link"
+            <input class="text-input" type="text" placeholder="Github Link"
                 onChange={(e)=>{
                     e.preventDefault();
                     setGithubLink(e.target.value);
