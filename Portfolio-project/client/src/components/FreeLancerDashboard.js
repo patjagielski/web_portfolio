@@ -21,6 +21,7 @@ function FreeLancerDashboard({startSetDashboard,startSetContactMePage,getLiteral
             const result = await startSetDashboard();
             const contact = await startSetContactMePage();
             setBaseState(contact.data);
+            console.log(result)
             console.log(contact.data)
             if(result){
             

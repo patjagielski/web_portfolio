@@ -178,11 +178,12 @@ app.post("/addNewUserInfo",fileMiddleware, (req, res)=>{
   const lastName = req.body.lastName;
   const userWork = req.body.userWork;
   const userEducation = req.body.userEducation;
+  const userBio = req.body.userBio;
   const fileName = req.file.filename;
   const fileType = req.file.mimetype;
   const filePath = path.join(__dirname,"upload",fileName)
 
-  connection.query("INSERT INTO user_info(userId, userWork, userEducation, firstName, lastName, userCVName, userCVFilePath, userCVFileType) VALUES(?,?,?,?,?,?,?,?)", [id,firstName, lastName, userWork, userEducation, fileName,filePath,fileType], (err, rows)=>{
+  connection.query("INSERT INTO user_info(userId, userWork, userEducation,userBio, firstName, lastName, userCVName, userCVFilePath, userCVFileType) VALUES(?,?,?,?,?,?,?,?,?)", [id,userWork,userEducation,userBio,firstName, lastName, fileName,filePath,fileType], (err, rows)=>{
     if(err){
       throw err
     }else{

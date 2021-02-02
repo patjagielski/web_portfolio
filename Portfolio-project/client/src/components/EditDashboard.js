@@ -11,6 +11,7 @@ function EditDashboard({startEditDashboard,getLiterals,getLang}){
         //create axios post 
         // console.log(firstName)
         startEditDashboard(firstName, lastName, userWork, userEducation, userBio, userCV, instagramLink, linkedInLink, facebookLink, githublink);
+        console.log(userBio)
         history.push('/freelancer');
         //dipatch redux
     }
