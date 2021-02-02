@@ -15,10 +15,12 @@ const CreateJobListing = ({createJobPosting, getLiterals, getLang}) => {
 
     return(
         <div>
-        <div>
-            <h1> {getLang === "en" ? (getLiterals.en.create_job):( getLang === "pl" ? (getLiterals.pl.create_job):(getLiterals.ru.create_job))} </h1>
+        <div className="page-header">
+            <div className="content-container">
+            <h1 className="page-header__title"> {getLang === "en" ? (getLiterals.en.create_job):( getLang === "pl" ? (getLiterals.pl.create_job):(getLiterals.ru.create_job))} </h1>
         </div>
-        <div>
+        </div>
+        <div className="content-container">
             <JobListingForm 
                 customSubmit={handleSubmit}
             />

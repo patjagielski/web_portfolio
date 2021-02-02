@@ -16,11 +16,13 @@ function EditDashboard({startEditDashboard,getLiterals,getLang}){
     }
 
     return(
-        <div className="content-container">
         <div>
-            <h1 className="display-3">  {getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))} </h1>
+        <div className="page-header">
+            <div className="content-container">
+            <h1 className="page-header__title">  {getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))} </h1>
         </div>
-        <div>
+        </div>
+        <div className="content-container">
             <DashbaordForm 
             customSubmit={handleSubmit}
             />

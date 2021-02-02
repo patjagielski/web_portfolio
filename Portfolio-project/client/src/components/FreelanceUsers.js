@@ -4,16 +4,13 @@ export const FreelanceUsers = ({firstName, lastName, email, username, password, 
     <div>
         <div className="row">
             <div className="col">
-               <span className="custom-card-desc">{firstName}</span>
+               <span className="custom-card-desc-user">{firstName}</span>
             </div>
             <div className="col">
-                <span className="custom-card-desc">{lastName}</span>
+                <span className="custom-card-desc-user">{lastName}</span>
             </div>
             <div className="col">
-                <span className="custom-card-desc">{email}</span>
-            </div>
-            <div className="col">
-                <span className="custom-card-desc">{roleName}</span>
+                <span className="custom-card-desc-user">{email}</span>
             </div>
         </div>
     </div>

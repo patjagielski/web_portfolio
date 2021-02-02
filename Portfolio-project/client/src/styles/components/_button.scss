@@ -46,11 +46,17 @@
     display: inline-block;
     text-decoration: none;
     line-height: 1;
+    &:hover{
+        background: lighten(black, 25%)
+    }
 }
 
 .button-layout__remove{
     @extend .button-layout;
     background: rgb(134, 33, 33);
+    &:hover{
+        background: lighten(rgb(134, 33, 33), 25%)
+    }
 }
 
 .button-layout__freelancer{
@@ -59,7 +65,10 @@
     font-size: $font-size-small;
     color: black;
     font-weight: bolder;
-    background: rgb(175, 252, 175) ;
+    background: rgb(189, 250, 189) ;
+    &:hover{
+        background: darken(rgb(189, 250, 189), 10%)
+    }
 }
 
 .button-layout__logout{

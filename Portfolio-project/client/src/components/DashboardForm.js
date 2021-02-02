@@ -37,7 +37,7 @@ function DashbaordForm({dashboardState, customSubmit}){
     }
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
             <input class="text-input" type="text" placeholder="First Name" 
                 onChange={(e)=>{setFirstName(onFirstNameChange(e))}}
             />
@@ -65,7 +65,7 @@ function DashbaordForm({dashboardState, customSubmit}){
                 }}
             />
             
-            <h3 className="display-3">Social Media Info</h3>
+            <h3 className="page-header__title">Social Media Info</h3>
 
             <input class="text-input" type="text" placeholder="Instagram Link"
                 onChange={(e)=>{
@@ -88,7 +88,7 @@ function DashbaordForm({dashboardState, customSubmit}){
                     setGithubLink(e.target.value);
                 }}/>
             <div>
-                <button>Submit</button>
+                <button className="button-layout">Submit</button>
             </div>
         </form>
     )

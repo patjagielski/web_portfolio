@@ -5,7 +5,7 @@ import {logout} from '../actions/auth';
 import {setLang} from '../actions/lang'
 
 
-const RecruiterHeader = ({logout,getLang, setStoreLang}) => {
+const RecruiterHeader = ({logout,getLang, setStoreLang, getLiterals}) => {
     const [lang, setLang] = useState(getLang);
     
     useEffect(()=>{
@@ -13,25 +13,27 @@ const RecruiterHeader = ({logout,getLang, setStoreLang}) => {
         console.log(getLang)
     },[lang])
     return(
-    <header>
-    <div>
-        <button onClick={(e)=>{
+        <header className="header__content">
+        
+            <NavLink className="button-icon" to='/recruiter' activeClassName='is-active' exact={true}></NavLink>
+
+        <div className="container d-flex flex-row-reverse justify-content-between">
+        <div className="d-flex flex-row-reverse bd-highlight">
+        <button className="en" onClick={(e)=>{
             setLang("en");
-        }}>English</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="pl"  onClick={(e)=>{
             setLang("pl");
-        }}>Polish</button>
-        <button onClick={(e)=>{
+        }}></button>
+        <button className="ru" onClick={(e)=>{
             setLang("ru");
-        }}>Russian</button>
+        }}></button>
         </div>
         <div>
-            <NavLink to='/CreateJobListing' activeClassName='is-active' exact={true}>Create Job Listing</NavLink>
-            <br />
-            <NavLink to='/EditJobListing' activeClassName='is-active' exact={true}>Edit Job Listing</NavLink>
-            <br />
-            <NavLink to='/ViewMyJobs' activeClassName='is-active' exact={true}>View My Jobs</NavLink>
-            <button onClick={(logout)}>Logout</button>
+            <NavLink className="button-layout__freelancer" to='/CreateJobListing' activeClassName='is-active' exact={true}>{getLang === "en" ? (getLiterals.en.create_job):( getLang === "pl" ? (getLiterals.pl.create_job):(getLiterals.ru.create_job))}</NavLink>
+            <NavLink className="button-layout__freelancer" to='/ViewMyJobs' activeClassName='is-active' exact={true}>{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</NavLink>
+            <button className="button-layout__logout" onClick={(logout)}>Logout</button>
+        </div>
         </div>
     </header>
 );
@@ -42,6 +44,8 @@ const mapDispatchToProps = (dispatch) => ({
     setStoreLang : (lang)=>dispatch(setLang(lang))
 });
 const mapStateToProps = (state)=>({
+    getLiterals: state.literals,
     getLang: state.lang.lang
+
 })
 export default connect(mapStateToProps, mapDispatchToProps)(RecruiterHeader);

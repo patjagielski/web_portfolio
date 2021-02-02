@@ -24,14 +24,21 @@ const RecruiterViewJobList = ({getRecruiterJobs, startEditJobListing, startRemov
     }
 
     return(
-        <div>
+        <div className="content-container">
+            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</h1>
             {
                baseState.length === 0 ? (
                    <span>{getLang === "en" ? (getLiterals.en.no_jobs):( getLang === "pl" ? (getLiterals.pl.no_jobs):(getLiterals.ru.no_jobs))}</span>
                ):(
                    baseState.map((val)=>{
-                       return <div><RecruiterViewJobItem key={val.jobId} {...val}/><button onClick={(()=>{handleOnRemove(val)})}>X</button>
-                       <button onClick={((e)=>{handleOnClick(e, val)})}>Edit</button></div>
+                       return (
+                        <div className="card">
+                            <div className="card-body">
+                                <RecruiterViewJobItem key={val.jobId} {...val}/>
+                                <button className="btn btn-danger btn-lg" onClick={(()=>{handleOnRemove(val)})}>X</button>
+                                <button className="btn btn-primary btn-lg" onClick={((e)=>{handleOnClick(e, val)})}>{getLang === "en" ? (getLiterals.en.edit_job):( getLang === "pl" ? (getLiterals.pl.edit_job):(getLiterals.ru.edit_job))}</button>
+                            </div>
+                       </div>)
                    })
                ) 
             }

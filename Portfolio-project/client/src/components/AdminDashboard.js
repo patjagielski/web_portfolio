@@ -22,25 +22,16 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
 
     const handleOnClick = (id) => {
         startRemoveUser(id);
-        history.push('/admin');
+        history.push('/');
     }
 
     return(
+        <div className="content-container__admin">
         <div className="container">
-        <div>
-        <div className="content-container">
             <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_freelancers):( getLang === "pl" ? (getLiterals.pl.A_freelancers):(getLiterals.ru.A_freelancers))}</h1>
         </div>
-            <table className="table">
-            <thead>
-                <tr>
-                    <th className="custom-card-title" scope="col">First Name</th>
-                    <th className="custom-card-title" scope="col">Last Name</th>
-                    <th className="custom-card-title" scope="col">Email</th>
-                    <th className="custom-card-title" scope="col">Role</th>
-                </tr>
-            </thead>
-            </table>
+        <hr />
+
             
             {
                 baseState.length === 0 ? (
@@ -50,20 +41,31 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
                 ) : (
                     baseState.map((values, index)=>{
                         if(values.roleName === "FREELANCER"){
-                            return <div className="content-container__job-list">
+                            return(
+                            <div className="content-container__user-list">
                             
-                                <FreelanceUsers key={values.userId} {...values} /> <button className="button-layout__remove" onClick={((e)=>{handleOnClick(values.userId)})}>X</button> 
-                            
-                            </div>
+                                    <div className="clearfix">
+                                        <div className="btn-group inline pull-left">
+                                        
+                                            
+                                            <button className="btn btn-danger btn-lg" onClick={((e)=>{handleOnClick(values.userId)})}>X</button> 
+                                           
+                                            <FreelanceUsers key={values.userId} {...values} />
+                                            
+                                            
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>)
                         }
                     })
                 )
             }
-            
-            
-        </div>
-        <div>
-            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_admin):( getLang === "pl" ? (getLiterals.pl.A_admin):(getLiterals.ru.A_admin))}</h1>
+            <div className="content-container__admin">
+        <div className="container">
+                <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_admin):( getLang === "pl" ? (getLiterals.pl.A_admin):(getLiterals.ru.A_admin))}</h1>
+            </div>
+            <hr />
             {
                 baseState.length === 0 ? (
                     <div>
@@ -72,14 +74,28 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
                 ) : (
                     baseState.map((values, index)=>{
                         if(values.roleName === "ADMIN"){
-                            return <div><AdminUsers key={values.userId} {...values} /> <button>X</button> </div>
+                            return (
+                            <div className="content-container__user-list">
+                                <div className="clearfix">  
+                                    <div className="btn-group inline pull-left">
+                                        <button className="btn btn-danger btn-lg" >X</button> 
+                                        <AdminUsers key={values.userId} {...values} />
+                                
+                                    </div>
+                                    </div>
+                                <hr />
+                            </div>)
                         }
                     })
                 )
             }
+        
         </div>
-        <div>
-            <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_recruiters):( getLang === "pl" ? (getLiterals.pl.A_recruiters):(getLiterals.ru.A_recruiters))}</h1>
+        <div className="content-container__admin">
+        <div className="container">
+                <h1 className="display-3">{getLang === "en" ? (getLiterals.en.A_recruiters):( getLang === "pl" ? (getLiterals.pl.A_recruiters):(getLiterals.ru.A_recruiters))}</h1>
+            </div>
+            <hr />
             {
                 baseState.length === 0 ? (
                     <div>
@@ -88,7 +104,16 @@ function AdminDashboard({getAllUsers, startRemoveUser, getLiterals,getLang}){
                 ) : (
                     baseState.map((values,index)=>{
                         if(values.roleName === "RECRUITER"){
-                            return <div><RecruiterUsers key={values.userId} {...values} /> <button onClick={((e)=>{handleOnClick(values.userId)})}>X</button> </div>
+                            return (
+                                <div className="content-container__user-list">
+                                <div className="clearfix">  
+                                    <div className="btn-group inline pull-left">
+                                        <button className="btn btn-danger btn-lg" onClick={((e)=>{handleOnClick(values.userId)})}>X</button>  
+                                        <RecruiterUsers key={values.userId} {...values} /> 
+                                    </div>
+                                    </div>
+                                <hr />
+                            </div>)
                         }
                     })
                 )

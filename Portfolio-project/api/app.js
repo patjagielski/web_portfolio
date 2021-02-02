@@ -276,7 +276,7 @@ app.get("/getAllusers", (req, res)=>{
 })
 
 app.get("/allFreelancers",(req, res)=>{
-  connection.query("SELECT * FROM  user_info ui, role_user ru WHERE ui.userId = ru.userID AND ru.roleId = 3;",(err, rows)=>{
+  connection.query("SELECT * FROM  user_info ui, role_user ru, user c WHERE ui.userId = c.userId AND ui.userId = ru.userID AND ru.roleId = 3;",(err, rows)=>{
     if(err){
       res.send({err})
     }else{

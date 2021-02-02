@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 
 function JobListingForm({customSubmit, job,getLiterals, getLang}){
 
-    const [jobTitle, setJobTitle] = useState(job ? job[0].job.jobTitle : "")
-    const [techRequirements, setTechRequirements] = useState(job ? job[0].job.techRequirements : "")
-    const [levelOfExpertise, setlevelOfExpertise] = useState(job ? job[0].job.levelOfExpertise : "")
-    const [jobDescription, setJobDescription] = useState(job ?job[0].job.jobDescription : "")
+    const [jobTitle, setJobTitle] = useState(job ? job[0].jobTitle : "")
+    const [techRequirements, setTechRequirements] = useState(job ? job[0].techRequirements : "")
+    const [levelOfExpertise, setlevelOfExpertise] = useState(job ? job[0].levelOfExpertise : "")
+    const [jobDescription, setJobDescription] = useState(job ?job[0].jobDescription : "")
 
 
     const handleSubmit = (e) =>{
@@ -17,33 +17,33 @@ function JobListingForm({customSubmit, job,getLiterals, getLang}){
     }
 
     return(
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Job Title" 
+        <form className="form" onSubmit={handleSubmit}>
+            <input className="text-input" type="text" placeholder="Job Title" 
                 onChange={(e)=>{
                     e.preventDefault();
                     setJobTitle(e.target.value)
                 }}
             />
-            <input type="text" placeholder="Tech Requirements"
+            <input className="text-input" type="text" placeholder="Tech Requirements"
                 onChange={(e)=>{
                     e.preventDefault();
                     setTechRequirements(e.target.value)
                 }}
             />
-            <input type="text" placeholder="Work Experience"
+            <input className="text-input" type="text" placeholder="Work Experience"
                 onChange={(e)=>{
                     e.preventDefault();
                     setlevelOfExpertise(e.target.value);
                 }}
             />
-            <textarea placeholder="Input a Bio here"
+            <textarea className="text-area" placeholder="Input Job Details Here"
                 onChange={(e)=>{
                     e.preventDefault();
                     setJobDescription(e.target.value)
                 }}
             />  
             <div>
-                <button>{getLang === "en" ? (getLiterals.en.submit):( getLang === "pl" ? (getLiterals.pl.submit):(getLiterals.ru.submit))}</button>
+                <button className="button-layout">{getLang === "en" ? (getLiterals.en.submit):( getLang === "pl" ? (getLiterals.pl.submit):(getLiterals.ru.submit))}</button>
             </div>
         </form>
     )

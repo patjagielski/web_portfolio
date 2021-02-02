@@ -35,8 +35,8 @@ const FreeLancerHeader = ({logout,setStoreLang, getLang, getLiterals}) => {
         }}></button>
         </div>
         <div>
-            <NavLink className="button-layout__freelancer" to='/portfolio' activeClassName='is-active' exact={true}>Portfolio</NavLink>
-            <NavLink className="button-layout__freelancer" to='/ViewJobListings' activeClassName='is-active' exact={true}>View Jobs</NavLink>
+            <NavLink className="button-layout__freelancer" to='/portfolio' activeClassName='is-active' exact={true}>{getLang === "en" ? (getLiterals.en.portfolio):( getLang === "pl" ? (getLiterals.pl.portfolio):(getLiterals.ru.portfolio))}</NavLink>
+            <NavLink className="button-layout__freelancer" to='/ViewJobListings' activeClassName='is-active' exact={true}>{getLang === "en" ? (getLiterals.en.view_jobs):( getLang === "pl" ? (getLiterals.pl.view_jobs):(getLiterals.ru.view_jobs))}</NavLink>
             <NavLink className="button-layout__freelancer" to="/EditDashboard">{getLang === "en" ? (getLiterals.en.edit_dashboard):( getLang === "pl" ? (getLiterals.pl.edit_dashboard):(getLiterals.ru.edit_dashboard))}</NavLink>
             <button className="button-layout__logout" onClick={logout}>Logout</button>
         </div>

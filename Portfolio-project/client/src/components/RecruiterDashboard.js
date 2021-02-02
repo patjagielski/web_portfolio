@@ -11,6 +11,7 @@ function RecruiterDashboard({getFreelancers,getLiterals,getLang}){
     useEffect(()=>{
         async function fetchData() {
             const result = await getFreelancers();
+            console.log(result)
             setBaseState(result);
         }
         fetchData();
@@ -18,8 +19,13 @@ function RecruiterDashboard({getFreelancers,getLiterals,getLang}){
 
     return(
         <div>
-            <h1>{getLang === "en" ? (getLiterals.en.R_check_out):( getLang === "pl" ? (getLiterals.pl.R_check_out):(getLiterals.ru.R_check_out))}</h1>
-            <br />
+        <div className="page-header">
+            <div className="content-container">
+            <h1 className="page-header__title">{getLang === "en" ? (getLiterals.en.R_check_out):( getLang === "pl" ? (getLiterals.pl.R_check_out):(getLiterals.ru.R_check_out))}</h1>
+            <hr />
+            </div>
+            </div>
+            
             {
                 baseState.length === 0 ? (
                     <div>
@@ -27,7 +33,7 @@ function RecruiterDashboard({getFreelancers,getLiterals,getLang}){
                     </div>
                 ):(
                     baseState.map((val)=>{
-                    return <RecruiterItem key={val.userId} {...val} />
+                    return <div className="content-container"><RecruiterItem key={val.userId} {...val} /><hr/></div>
                         
                 })
                 )

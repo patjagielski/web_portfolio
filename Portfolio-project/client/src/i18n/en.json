@@ -30,7 +30,8 @@
             "new_dashboard":"Create a new Dashboard",
             "edit_job":"Edit your job listing here!",
             "edit_dashboard":"Edit Your Dashboard Here!",
-            "create_job":"Create a new job listing!"
+            "create_job":"Create a new job listing!",
+            "portfolio":"Portfolio"
     },
     "pl": {
             "login":"Zaloguj sie",
@@ -63,7 +64,8 @@
             "new_dashboard":"Utwórz nowy pulpit nawigacyjny",
             "edit_job":"Edytuj swoją ofertę pracy tutaj!",
             "edit_dashboard":"Edytuj swój pulpit nawigacyjny tutaj!",
-            "create_job":"Utwórz nową ofertę pracy!"
+            "create_job":"Utwórz nową ofertę pracy!" ,
+            "portfolio":"Teczka"
     },
     "ru":{
             "login":"авторизоваться",
@@ -96,6 +98,8 @@
             "new_dashboard":"Создать новую сводку",
             "edit_job":"Отредактируйте список вакансий здесь!",
             "edit_dashboard":"Отредактируйте свою панель управления здесь!",
-            "create_job":"Создайте новую вакансию!"
+            "create_job":"Создайте новую вакансию!",
+            "portfolio":"портфолио"
+
     }
 }

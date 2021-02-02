@@ -9,6 +9,13 @@
     max-width: 80rem;
     text-align: center;
 }
+.content-container__admin{
+    @extend .content-container;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
     
 .content-container__dashboard{
     @extend .content-container;
@@ -41,8 +48,6 @@
 
 .content-container__user-list{
     @extend .content-container;
-    text-align:unset;
-    display:inline;
 }
 
 body{
